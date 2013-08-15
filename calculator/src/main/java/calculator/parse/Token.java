@@ -27,24 +27,28 @@ package calculator.parse;
  * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
  */
 public abstract class Token {
-
     public static enum Type {
-
-        Number, Operator, Function
+        Number, Function
     }
-    private final String rawValue;
+
+    private final transient String rawValue;
 
     public Token(final String rawValue) {
         this.rawValue = rawValue;
     }
 
-    public String getRawValue() {
+    /**
+     * Gets raw string value of the token.
+     *
+     * @return
+     */
+    public final String getRawValue() {
         return rawValue;
     }
 
     public abstract Type getType();
 
-    public abstract double getNumber() throws IllegalAccessException;
+    public abstract double getNumber();
 
-    public abstract Function getFunction() throws IllegalAccessException;
+    public abstract Function getFunction();
 }

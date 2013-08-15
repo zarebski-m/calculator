@@ -27,7 +27,6 @@ package calculator.parse;
  * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
  */
 public interface Function {
-
     /**
      * Returns number of acceptable arguments.
      *
