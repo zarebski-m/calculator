@@ -21,25 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.function;
 
-import calculator.function.Function;
+import java.util.Stack;
 
-public class OperatorToken extends Token<Function> {
-    private final Function function;
-
-    public OperatorToken(final String rawValue, final Function function) {
-        super(rawValue);
-        this.function = function;
+public final class BuiltinFunction {
+    public abstract static class UnaryFunction extends MathFunction {
+        public final int getArity() {
+            return 1;
+        }
     }
 
-    @Override
-    public final Type getType() {
-        return Type.Function;
+    public static final class Sin extends UnaryFunction {
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.sin(val));
+        }
     }
 
-    @Override
-    public final Function getValue() {
-        return function;
+    public static final class Cos extends UnaryFunction {
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.cos(val));
+        }
+    }
+
+    public static final class Tan extends UnaryFunction {
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.tan(val));
+        }
+    }
+
+    public static final class Cotan extends UnaryFunction {
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.cos(val) / Math.sin(val));
+        }
     }
 }

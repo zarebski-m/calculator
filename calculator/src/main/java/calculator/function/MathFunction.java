@@ -21,25 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.function;
 
-import calculator.function.Function;
-
-public class OperatorToken extends Token<Function> {
-    private final Function function;
-
-    public OperatorToken(final String rawValue, final Function function) {
-        super(rawValue);
-        this.function = function;
+public abstract class MathFunction implements Function {
+    public final int getPriority() {
+        return 10;
     }
 
-    @Override
-    public final Type getType() {
-        return Type.Function;
-    }
-
-    @Override
-    public final Function getValue() {
-        return function;
+    public final Associativity getAssociativity() {
+        return Associativity.Right;
     }
 }

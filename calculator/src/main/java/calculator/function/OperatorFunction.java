@@ -26,7 +26,7 @@ package calculator.function;
 import java.util.Stack;
 
 public final class OperatorFunction {
-    public abstract static class Operator implements Function {
+    private abstract static class Operator implements Function {
         private double lhs;
 
         private double rhs;
