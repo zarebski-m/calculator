@@ -24,10 +24,12 @@
 package calculator.function;
 
 public abstract class MathFunction implements Function {
+    @Override
     public final int getPriority() {
         return 10;
     }
 
+    @Override
     public final Associativity getAssociativity() {
         return Associativity.Right;
     }

@@ -26,34 +26,32 @@ package calculator.function;
 import java.util.Stack;
 
 public final class BuiltinFunction {
-    public abstract static class UnaryFunction extends MathFunction {
-        public final int getArity() {
-            return 1;
-        }
-    }
-
-    public static final class Sin extends UnaryFunction {
+    public static final class Sin extends MathFunction {
+        @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
             stack.push(Math.sin(val));
         }
     }
 
-    public static final class Cos extends UnaryFunction {
+    public static final class Cos extends MathFunction {
+        @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
             stack.push(Math.cos(val));
         }
     }
 
-    public static final class Tan extends UnaryFunction {
+    public static final class Tan extends MathFunction {
+        @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
             stack.push(Math.tan(val));
         }
     }
 
-    public static final class Cotan extends UnaryFunction {
+    public static final class Cotan extends MathFunction {
+        @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
             stack.push(Math.cos(val) / Math.sin(val));

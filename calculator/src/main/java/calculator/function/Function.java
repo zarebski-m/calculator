@@ -30,8 +30,6 @@ public interface Function {
         Left, Right
     }
 
-    int getArity();
-
     int getPriority();
 
     Associativity getAssociativity();

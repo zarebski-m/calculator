@@ -26,11 +26,8 @@ package calculator.function;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
- */
 public class FunctionFactory {
-    private final Map<String, Function> functions = new HashMap<String, Function>();
+    private final Map<String, Function> functions = new HashMap<>();
 
     public FunctionFactory() {
         // operators
@@ -42,7 +39,10 @@ public class FunctionFactory {
         functions.put("^", new OperatorFunction.Power());
 
         // builtin functions
-
+        functions.put("sin", new BuiltinFunction.Sin());
+        functions.put("cos", new BuiltinFunction.Cos());
+        functions.put("tan", new BuiltinFunction.Tan());
+        functions.put("cotan", new BuiltinFunction.Cotan());
     }
 
     public Function getFunction(final String name) {

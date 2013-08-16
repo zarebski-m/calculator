@@ -27,6 +27,12 @@ import java.util.Stack;
 
 public final class OperatorFunction {
     private abstract static class Operator implements Function {
+        protected static final int PRIORITY_ADDITIVE = 1;
+
+        protected static final int PRIORITY_MULTIPLICATIVE = 2;
+
+        protected static final int PRIORITY_POWER = 3;
+
         private double lhs;
 
         private double rhs;
@@ -43,21 +49,20 @@ public final class OperatorFunction {
             rhs = stack.pop();
             lhs = stack.pop();
         }
-
-        public final int getArity() {
-            return 2;
-        }
     }
 
     public static final class Add extends Operator {
+        @Override
         public int getPriority() {
-            return 1;
+            return PRIORITY_ADDITIVE;
         }
 
+        @Override
         public Associativity getAssociativity() {
             return Associativity.Left;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(getLhs() + getRhs());
@@ -65,14 +70,17 @@ public final class OperatorFunction {
     }
 
     public static final class Substract extends Operator {
+        @Override
         public int getPriority() {
-            return 1;
+            return PRIORITY_ADDITIVE;
         }
 
+        @Override
         public Associativity getAssociativity() {
             return Associativity.Left;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(getLhs() - getRhs());
@@ -80,14 +88,17 @@ public final class OperatorFunction {
     }
 
     public static final class Multiply extends Operator {
+        @Override
         public int getPriority() {
-            return 2;
+            return PRIORITY_MULTIPLICATIVE;
         }
 
+        @Override
         public Associativity getAssociativity() {
             return Associativity.Left;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(getLhs() * getRhs());
@@ -95,14 +106,17 @@ public final class OperatorFunction {
     }
 
     public static final class Divide extends Operator {
+        @Override
         public int getPriority() {
-            return 2;
+            return PRIORITY_MULTIPLICATIVE;
         }
 
+        @Override
         public Function.Associativity getAssociativity() {
             return Function.Associativity.Left;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(getLhs() / getRhs());
@@ -110,14 +124,17 @@ public final class OperatorFunction {
     }
 
     public static final class Modulo extends Operator {
+        @Override
         public int getPriority() {
-            return 2;
+            return PRIORITY_MULTIPLICATIVE;
         }
 
+        @Override
         public Function.Associativity getAssociativity() {
             return Function.Associativity.Left;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(getLhs() % getRhs());
@@ -125,14 +142,17 @@ public final class OperatorFunction {
     }
 
     public static final class Power extends Operator {
+        @Override
         public int getPriority() {
-            return 3;
+            return PRIORITY_POWER;
         }
 
+        @Override
         public Function.Associativity getAssociativity() {
             return Function.Associativity.Right;
         }
 
+        @Override
         public void apply(final Stack<Double> stack) {
             prepareParams(stack);
             stack.push(Math.pow(getLhs(), getRhs()));
