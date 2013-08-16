@@ -23,6 +23,8 @@
  */
 package calculator.function;
 
+import calculator.exception.FunctionAlreadyExistsException;
+import calculator.exception.FunctionNotDefinedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,15 +47,18 @@ public class FunctionFactory {
         functions.put("cotan", new BuiltinFunction.Cotan());
     }
 
-    public Function getFunction(final String name) {
+    public Function getFunction(final String name) throws FunctionNotDefinedException {
         final Function function = functions.get(name);
         if (function == null) {
-            throw new IllegalArgumentException("Unknown function or operator: " + name);
+            throw new FunctionNotDefinedException(name);
         }
         return function;
     }
 
-    public void registerFunction(final String name, final Function function) {
+    public void registerFunction(final String name, final Function function) throws FunctionAlreadyExistsException {
+        if (functions.containsKey(name)) {
+            throw new FunctionAlreadyExistsException(name);
+        }
         functions.put(name, function);
     }
 }
