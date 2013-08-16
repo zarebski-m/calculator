@@ -40,15 +40,9 @@ public class NumberTokenTest {
         assertEquals(str, token.getRawValue());
     }
 
-    @Test
+    @Test(expected = NumberFormatException.class)
     public void testBuild_wrongValue() {
-        final Double expected = Double.NaN;
         final String str = "not a number";
-
         final NumberToken token = new NumberToken(str);
-
-        assertEquals(Token.Type.Number, token.getType());
-        assertEquals(expected, token.getValue());
-        assertEquals(str, token.getRawValue());
     }
 }

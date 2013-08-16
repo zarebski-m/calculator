@@ -23,19 +23,12 @@
  */
 package calculator.parse.token;
 
-import java.util.logging.Level;
-
 public class NumberToken extends Token<Double> {
-    private double value;
+    private final double value;
 
     public NumberToken(final String rawValue) {
         super(rawValue);
-        try {
-            value = Double.valueOf(getRawValue());
-        } catch (NumberFormatException e) {
-            LOG.log(Level.WARNING, "Cannot parse string to double: {0}; using NaN", getRawValue());
-            value = Double.NaN;
-        }
+        value = Double.valueOf(getRawValue());
     }
 
     @Override
