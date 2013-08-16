@@ -21,13 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator;
+package calculator.parse.token;
 
-public final class App {
-    private App() {
+import calculator.function.Function;
+
+public class OperatorToken extends Token<Function> {
+    private Function function;
+
+    public OperatorToken(final String rawValue) {
+        super(rawValue);
     }
 
-    public static void main(final String[] args) {
-        System.out.println("Hello World!");
+    @Override
+    public final Type getType() {
+        return Type.Function;
+    }
+
+    @Override
+    public final Function getValue() {
+        return function;
     }
 }

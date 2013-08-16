@@ -21,13 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator;
+package calculator.function;
 
-public final class App {
-    private App() {
+import java.util.Stack;
+
+public interface Function {
+    public static enum Associativity {
+        Left, Right
     }
 
-    public static void main(final String[] args) {
-        System.out.println("Hello World!");
-    }
+    int getArity();
+
+    int getPriority();
+
+    Associativity getAssociativity();
+
+    void apply(Stack<Double> stack);
 }

@@ -21,20 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse;
+package calculator.function;
 
-import java.util.Stack;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface Function {
-    public static enum Associativity {
-        Left, Right
+/**
+ * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
+ */
+public class FunctionFactory {
+    private final Map<String, Function> functions = new HashMap<String, Function>();
+
+    public FunctionFactory() {
+        // operators
+        functions.put("+", new OperatorFunction.Add());
+        functions.put("-", new OperatorFunction.Substract());
+        functions.put("*", new OperatorFunction.Multiply());
+        functions.put("/", new OperatorFunction.Divide());
+        functions.put("%", new OperatorFunction.Modulo());
+        functions.put("^", new OperatorFunction.Power());
+
+        // builtin functions
+
     }
 
-    int getArity();
+    public Function getFunction(final String name) {
+        final Function function = functions.get(name);
+        if (function == null) {
+            throw new IllegalArgumentException("Unknown function or operator: " + name);
+        }
+        return function;
+    }
 
-    int getPriority();
-
-    Associativity getAssociativity();
-
-    void apply(Stack<Double> stack);
+    public void registerFunction(final String name, final Function function) {
+        functions.put(name, function);
+    }
 }

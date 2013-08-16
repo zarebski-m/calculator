@@ -21,22 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse;
+package calculator.parse.token;
 
-public class OperatorToken extends Token<Function> {
-    private Function function;
+import static org.junit.Assert.assertEquals;
 
-    public OperatorToken(final String rawValue) {
-        super(rawValue);
+import org.junit.Test;
+
+public class NumberTokenTest {
+    @Test
+    public void testBuild_properValue() {
+        final Double expected = 12.3;
+        final String str = String.valueOf(expected);
+
+        final NumberToken token = new NumberToken(str);
+
+        assertEquals(Token.Type.Number, token.getType());
+        assertEquals(expected, token.getValue());
+        assertEquals(str, token.getRawValue());
     }
 
-    @Override
-    public final Type getType() {
-        return Type.Function;
-    }
+    @Test
+    public void testBuild_wrongValue() {
+        final Double expected = Double.NaN;
+        final String str = "not a number";
 
-    @Override
-    public final Function getValue() {
-        return function;
+        final NumberToken token = new NumberToken(str);
+
+        assertEquals(Token.Type.Number, token.getType());
+        assertEquals(expected, token.getValue());
+        assertEquals(str, token.getRawValue());
     }
 }
