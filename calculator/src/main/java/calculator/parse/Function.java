@@ -23,23 +23,18 @@
  */
 package calculator.parse;
 
-/**
- * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
- */
+import java.util.Stack;
+
 public interface Function {
-    /**
-     * Returns number of acceptable arguments.
-     *
-     * @return Number of arguments
-     */
+    public static enum Associativity {
+        Left, Right
+    }
+
     int getArity();
 
-    /**
-     * Applies function to given arguments.
-     *
-     * @param args Arguments for function
-     *
-     * @return Result of the function
-     */
-    double apply(final double... args);
+    int getPriority();
+
+    Associativity getAssociativity();
+
+    void apply(Stack<Double> stack);
 }

@@ -23,26 +23,28 @@
  */
 package calculator.parse;
 
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public abstract class Token<T> {
-    protected static final Logger LOG = Logger.getLogger("Token");
+public class NumberToken extends Token<Double> {
+    private double value;
 
-    public static enum Type {
-        Number, Function
+    public NumberToken(final String rawValue) {
+        super(rawValue);
+        try {
+            value = Double.valueOf(getRawValue());
+        } catch (NumberFormatException e) {
+            LOG.log(Level.WARNING, "Cannot parse string to double: {0}; using NaN", getRawValue());
+            value = Double.NaN;
+        }
     }
 
-    private final String rawValue;
-
-    public Token(final String rawValue) {
-        this.rawValue = rawValue;
+    @Override
+    public final Type getType() {
+        return Type.Number;
     }
 
-    public final String getRawValue() {
-        return rawValue;
+    @Override
+    public final Double getValue() {
+        return Double.valueOf(value);
     }
-
-    public abstract Type getType();
-
-    public abstract T getValue();
 }

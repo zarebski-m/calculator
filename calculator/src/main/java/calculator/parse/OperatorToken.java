@@ -23,26 +23,20 @@
  */
 package calculator.parse;
 
-import java.util.logging.Logger;
+public class OperatorToken extends Token<Function> {
+    private Function function;
 
-public abstract class Token<T> {
-    protected static final Logger LOG = Logger.getLogger("Token");
-
-    public static enum Type {
-        Number, Function
+    public OperatorToken(final String rawValue) {
+        super(rawValue);
     }
 
-    private final String rawValue;
-
-    public Token(final String rawValue) {
-        this.rawValue = rawValue;
+    @Override
+    public final Type getType() {
+        return Type.Function;
     }
 
-    public final String getRawValue() {
-        return rawValue;
+    @Override
+    public final Function getValue() {
+        return function;
     }
-
-    public abstract Type getType();
-
-    public abstract T getValue();
 }
