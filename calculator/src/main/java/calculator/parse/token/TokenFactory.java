@@ -39,6 +39,8 @@ public class TokenFactory {
                 return new BracketToken.Open(tokenString);
             case ClosedBracket:
                 return new BracketToken.Closed(tokenString);
+            case Comma:
+                return new BracketToken.Comma(tokenString);
             case Number:
                 return new NumberToken(tokenString);
             case Function:
@@ -54,6 +56,9 @@ public class TokenFactory {
         }
         if (")".equals(tokenString)) {
             return Token.TokenType.ClosedBracket;
+        }
+        if (",".equals(tokenString)) {
+            return Token.TokenType.Comma;
         }
 
         try {

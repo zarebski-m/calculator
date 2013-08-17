@@ -44,14 +44,14 @@ public abstract class ConstantFunction implements Function {
     public static final class Pi extends ConstantFunction {
         @Override
         public void apply(final Stack<Double> stack) {
-            stack.push(Math.sin(Math.PI));
+            stack.push(Math.PI);
         }
     }
 
     public static final class E extends ConstantFunction {
         @Override
         public void apply(final Stack<Double> stack) {
-            stack.push(Math.sin(Math.E));
+            stack.push(Math.E);
         }
     }
 }

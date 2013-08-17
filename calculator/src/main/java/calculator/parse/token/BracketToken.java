@@ -33,25 +33,36 @@ public abstract class BracketToken extends Token<Void> {
         return null;
     }
 
-    public static class Open extends BracketToken {
+    public static final class Open extends BracketToken {
         public Open(final String rawValue) {
             super(rawValue);
         }
 
         @Override
-        public final TokenType getTokenType() {
+        public TokenType getTokenType() {
             return TokenType.OpenBracket;
         }
     }
 
-    public static class Closed extends BracketToken {
+    public static final class Closed extends BracketToken {
         public Closed(final String rawValue) {
             super(rawValue);
         }
 
         @Override
-        public final TokenType getTokenType() {
+        public TokenType getTokenType() {
             return TokenType.ClosedBracket;
+        }
+    }
+
+    public static final class Comma extends BracketToken {
+        public Comma(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public TokenType getTokenType() {
+            return TokenType.Comma;
         }
     }
 }

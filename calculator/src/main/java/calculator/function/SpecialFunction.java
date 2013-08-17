@@ -21,28 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.function;
 
-import java.util.logging.Logger;
+import java.util.Stack;
 
-public abstract class Token<T> {
-    protected static final Logger LOG = Logger.getLogger("Token");
+public final class SpecialFunction implements Function {
+    public static final int PRIORITY_SPECIAL = -1;
 
-    public static enum TokenType {
-        Number, Function, OpenBracket, ClosedBracket, Comma
+    @Override
+    public int getPriority() {
+        return PRIORITY_SPECIAL;
     }
 
-    private final String rawValue;
-
-    public Token(final String rawValue) {
-        this.rawValue = rawValue;
+    @Override
+    public Associativity getAssociativity() {
+        return Associativity.Right;
     }
 
-    public final String getRawValue() {
-        return rawValue;
+    @Override
+    public void apply(final Stack<Double> stack) {
+        // nothing to do
     }
-
-    public abstract TokenType getTokenType();
-
-    public abstract T getValue();
 }

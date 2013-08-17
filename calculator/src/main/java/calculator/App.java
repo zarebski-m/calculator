@@ -21,28 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator;
 
-import java.util.logging.Logger;
+import calculator.exception.ExpressionExecuteException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
-public abstract class Token<T> {
-    protected static final Logger LOG = Logger.getLogger("Token");
-
-    public static enum TokenType {
-        Number, Function, OpenBracket, ClosedBracket, Comma
+public final class App {
+    private App() {
     }
 
-    private final String rawValue;
+    public static void main(final String[] args) throws IOException {
+        final Calculator calc = new Calculator();
 
-    public Token(final String rawValue) {
-        this.rawValue = rawValue;
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
+        String line = reader.readLine();
+
+        while (!"exit".equalsIgnoreCase(line)) {
+            try {
+                calc.execute(line);
+                System.out.println(calc.getResult());
+                calc.clear();
+            } catch (ExpressionExecuteException ex) {
+                ex.printStackTrace();
+            }
+            line = reader.readLine();
+        }
     }
-
-    public final String getRawValue() {
-        return rawValue;
-    }
-
-    public abstract TokenType getTokenType();
-
-    public abstract T getValue();
 }
