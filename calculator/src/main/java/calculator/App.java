@@ -37,17 +37,26 @@ public final class App {
         final Calculator calc = new Calculator();
 
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
-        String line = reader.readLine();
+        String line = readExpression(reader);
 
         while (!"exit".equalsIgnoreCase(line)) {
             try {
                 calc.execute(line);
-                System.out.println(calc.getResult());
+                writeResult(calc.getResult());
                 calc.clear();
             } catch (ExpressionExecuteException ex) {
                 ex.printStackTrace();
             }
-            line = reader.readLine();
+            line = readExpression(reader);
         }
+    }
+
+    private static String readExpression(final BufferedReader reader) throws IOException {
+        System.out.print("> ");
+        return reader.readLine();
+    }
+
+    private static void writeResult(double result) {
+        System.out.println(result);
     }
 }
