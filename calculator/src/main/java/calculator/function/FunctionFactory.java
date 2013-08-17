@@ -25,11 +25,15 @@ package calculator.function;
 
 import calculator.exception.FunctionAlreadyExistsException;
 import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.WrongFunctionNameException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class FunctionFactory {
     private final Map<String, Function> functions = new HashMap<>();
+
+    private final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
 
     public FunctionFactory() {
         // operators
@@ -41,10 +45,18 @@ public class FunctionFactory {
         functions.put("^", new OperatorFunction.Power());
 
         // builtin functions
-        functions.put("sin", new BuiltinFunction.Sin());
-        functions.put("cos", new BuiltinFunction.Cos());
-        functions.put("tan", new BuiltinFunction.Tan());
-        functions.put("cotan", new BuiltinFunction.Cotan());
+        functions.put("sin", new BuiltinFunction.Sinus());
+        functions.put("cos", new BuiltinFunction.Cosinus());
+        functions.put("tan", new BuiltinFunction.Tangens());
+        functions.put("cot", new BuiltinFunction.Cotangens());
+        functions.put("sec", new BuiltinFunction.Secans());
+        functions.put("csc", new BuiltinFunction.Cosecans());
+
+        functions.put("abs", new BuiltinFunction.AbsoluteValue());
+        functions.put("log", new BuiltinFunction.Log());
+        functions.put("exp", new BuiltinFunction.Exp());
+        functions.put("sgn", new BuiltinFunction.Signum());
+        functions.put("sqrt", new BuiltinFunction.SquareRoot());
     }
 
     public Function getFunction(final String name) throws FunctionNotDefinedException {
@@ -55,7 +67,11 @@ public class FunctionFactory {
         return function;
     }
 
-    public void registerFunction(final String name, final Function function) throws FunctionAlreadyExistsException {
+    public void registerFunction(final String name, final Function function) throws FunctionAlreadyExistsException,
+                                                                                    WrongFunctionNameException {
+        if (!namePattern.matcher(name).matches()) {
+            throw new WrongFunctionNameException(name);
+        }
         if (functions.containsKey(name)) {
             throw new FunctionAlreadyExistsException(name);
         }

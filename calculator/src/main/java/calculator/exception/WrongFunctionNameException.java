@@ -21,18 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.exception;
 
-public abstract class MathFunction implements Function {
-    private static final int PRIORITY_FUNCTION = 10;
-
-    @Override
-    public final int getPriority() {
-        return PRIORITY_FUNCTION;
-    }
-
-    @Override
-    public final Associativity getAssociativity() {
-        return Associativity.Right;
+public class WrongFunctionNameException extends Exception {
+    public WrongFunctionNameException(final String message) {
+        super(message);
     }
 }

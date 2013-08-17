@@ -26,7 +26,7 @@ package calculator.function;
 import java.util.Stack;
 
 public final class BuiltinFunction {
-    public static final class Sin extends MathFunction {
+    public static final class Sinus extends MathFunction {
         @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
@@ -34,7 +34,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class Cos extends MathFunction {
+    public static final class Cosinus extends MathFunction {
         @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
@@ -42,7 +42,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class Tan extends MathFunction {
+    public static final class Tangens extends MathFunction {
         @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
@@ -50,11 +50,67 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class Cotan extends MathFunction {
+    public static final class Cotangens extends MathFunction {
         @Override
         public void apply(final Stack<Double> stack) {
             final double val = stack.pop();
             stack.push(Math.cos(val) / Math.sin(val));
+        }
+    }
+
+    public static final class Secans extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(1.0 / Math.cos(val));
+        }
+    }
+
+    public static final class Cosecans extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(1.0 / Math.sin(val));
+        }
+    }
+
+    public static final class AbsoluteValue extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.abs(val));
+        }
+    }
+
+    public static final class Log extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.log(val));
+        }
+    }
+
+    public static final class Exp extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.exp(val));
+        }
+    }
+
+    public static final class Signum extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.signum(val));
+        }
+    }
+
+    public static final class SquareRoot extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.sqrt(val));
         }
     }
 }
