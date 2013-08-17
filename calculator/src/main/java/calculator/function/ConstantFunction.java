@@ -21,25 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator;
+package calculator.function;
 
-import calculator.function.Function;
 import java.util.Stack;
 
-public class Calculator {
-    private final Stack<Double> values = new Stack<>();
+/**
+ * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
+ */
+public abstract class ConstantFunction implements Function {
+    private static final int PRIORITY_CONSTANT = 100;
 
-    private final Stack<Function> functions = new Stack<>();
-
-    public void calculate(final String expression) {
+    @Override
+    public final int getPriority() {
+        return PRIORITY_CONSTANT;
     }
 
-    public void clear() {
-        values.clear();
-        functions.clear();
+    @Override
+    public final Associativity getAssociativity() {
+        return Associativity.Left;
     }
 
-    public double getResult() {
-        return 0.0;
+    public static final class Pi extends ConstantFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.sin(Math.PI));
+        }
+    }
+
+    public static final class E extends ConstantFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.sin(Math.E));
+        }
     }
 }

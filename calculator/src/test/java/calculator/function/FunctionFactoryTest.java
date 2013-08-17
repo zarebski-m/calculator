@@ -44,15 +44,17 @@ public class FunctionFactoryTest {
     public void testGetFunction_checkBuiltins() throws Exception {
         final String[] names = {
             // trigonometric
-            "sin", "cos", "tan", "cot", "sec", "csc",
+            "sin", "cos", "tan",
             // cyclometric
-            //"arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
+            "asin", "acos", "atan", "atan2",
             // hiperbolic
-            //"sinh", "cosh", "tanh", "coth", "sech", "csch",
-            // inverse hyperbolic
-            //"arsinh", "arcosh", "artanh", "arcoth", "arsech", "arcsch",
+            "sinh", "cosh", "tanh",
+            // conversion
+            "d2r", "r2d",
             // other
-            "abs", "log", "exp", "sgn", "sqrt"
+            "abs", "log", "exp", "sgn", "sqrt",
+            // constants
+            "PI", "E"
         };
         for (final String name : names) {
             Function f = factory.getFunction(name);
@@ -68,9 +70,9 @@ public class FunctionFactoryTest {
     @Test
     public void testRegisterFunction_success() throws Exception {
         final String name = "sin_new";
-        factory.registerFunction(name, new BuiltinFunction.Sinus());
+        factory.registerFunction(name, new MathFunction.Sinus());
         final Function function = factory.getFunction(name);
-        assertTrue(function instanceof BuiltinFunction.Sinus);
+        assertTrue(function instanceof MathFunction.Sinus);
     }
 
     @Test(expected = FunctionAlreadyExistsException.class)

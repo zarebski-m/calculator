@@ -23,6 +23,8 @@
  */
 package calculator.function;
 
+import java.util.Stack;
+
 public abstract class MathFunction implements Function {
     private static final int PRIORITY_FUNCTION = 10;
 
@@ -34,5 +36,142 @@ public abstract class MathFunction implements Function {
     @Override
     public final Associativity getAssociativity() {
         return Associativity.Right;
+    }
+
+    public static final class Sinus extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.sin(val));
+        }
+    }
+
+    public static final class Cosinus extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.cos(val));
+        }
+    }
+
+    public static final class Tangent extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.tan(val));
+        }
+    }
+
+    public static final class ArcSinus extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.asin(val));
+        }
+    }
+
+    public static final class ArcCosinus extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.acos(val));
+        }
+    }
+
+    public static final class ArcTangent extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.atan(val));
+        }
+    }
+
+    public static final class ArcTangent2 extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val2 = stack.pop();
+            final double val1 = stack.pop();
+            stack.push(Math.atan2(val1, val2));
+        }
+    }
+
+    public static final class SinusHyperbolic extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.sinh(val));
+        }
+    }
+
+    public static final class CosinusHyperbolic extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.cosh(val));
+        }
+    }
+
+    public static final class TangentHyperbolic extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.tanh(val));
+        }
+    }
+
+    public static final class AbsoluteValue extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.abs(val));
+        }
+    }
+
+    public static final class Log extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.log(val));
+        }
+    }
+
+    public static final class Exp extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.exp(val));
+        }
+    }
+
+    public static final class Signum extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.signum(val));
+        }
+    }
+
+    public static final class SquareRoot extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.sqrt(val));
+        }
+    }
+
+    public static final class DegreesToRadians extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.toRadians(val));
+        }
+    }
+
+    public static final class RadiansToDegrees extends MathFunction {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            final double val = stack.pop();
+            stack.push(Math.toDegrees(val));
+        }
     }
 }
