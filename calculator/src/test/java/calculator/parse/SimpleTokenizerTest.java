@@ -26,9 +26,6 @@ package calculator.parse;
 import org.junit.Test;
 
 public class SimpleTokenizerTest {
-    public SimpleTokenizerTest() {
-    }
-
     @Test
     public void testHasNextToken() {
     }
