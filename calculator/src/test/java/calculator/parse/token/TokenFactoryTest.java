@@ -27,44 +27,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import calculator.exception.FunctionNotDefinedException;
-import calculator.function.Function;
 import calculator.function.FunctionFactory;
-import java.util.Stack;
-import org.easymock.EasyMock;
-import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TokenFactoryTest {
     private static final double EPSILON = 1e-10;
 
-    private static class DummyFunction implements Function {
-        @Override
-        public int getPriority() {
-            return -1;
-        }
-
-        @Override
-        public Associativity getAssociativity() {
-            return Associativity.Left;
-        }
-
-        @Override
-        public void apply(final Stack<Double> stack) {
-        }
-    }
-
-    private EasyMockSupport support;
-
-    private FunctionFactory functionFactoryMock;
-
     private TokenFactory testedObject;
 
     @Before
     public void setUp() {
-        support = new EasyMockSupport();
-        functionFactoryMock = support.createMock(FunctionFactory.class);
-        testedObject = new TokenFactory(functionFactoryMock);
+        testedObject = new TokenFactory(new FunctionFactory());
     }
 
     @Test
@@ -82,29 +56,19 @@ public class TokenFactoryTest {
 
     @Test
     public void testGetToken_existingFunction() throws Exception {
-        final String tokenString = "function";
-        final Function expected = new DummyFunction();
-        EasyMock.expect(functionFactoryMock.getFunction(tokenString)).andReturn(expected);
+        final String tokenString = "sin";
 
-        support.replayAll();
         final Token<?> token = testedObject.getToken(tokenString);
-        support.verifyAll();
 
         assertEquals(Token.TokenType.Function, token.getTokenType());
         assertTrue(token instanceof OperatorToken);
-        OperatorToken functionToken = (OperatorToken)token;
-        assertEquals(expected, functionToken.getValue());
     }
 
     @Test(expected = FunctionNotDefinedException.class)
     public void testGetToken_notExistingFunction() throws Exception {
-        final String tokenString = "function";
-        EasyMock.expect(functionFactoryMock.getFunction(tokenString)).andThrow(new FunctionNotDefinedException(
-                tokenString));
+        final String tokenString = "badFunction";
 
-        support.replayAll();
         testedObject.getToken(tokenString);
-        support.verifyAll();
     }
 
     @Test

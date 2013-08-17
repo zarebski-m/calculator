@@ -23,29 +23,14 @@
  */
 package calculator.parse;
 
-import calculator.exception.FunctionNotDefinedException;
-import calculator.parse.token.Token;
-import calculator.parse.token.TokenFactory;
+import org.junit.Test;
 
-public class SimpleTokenizer implements Tokenizer {
-    private final String[] tokenStrings;
-
-    private int pos = 0;
-
-    private final TokenFactory tokenFactory;
-
-    public SimpleTokenizer(final String input, final TokenFactory tokenFactory) {
-        this.tokenStrings = input.split("\\s");
-        this.tokenFactory = tokenFactory;
+public class SpaceTokenizerTest {
+    @Test
+    public void testHasNextToken() {
     }
 
-    @Override
-    public boolean hasNextToken() {
-        return pos < tokenStrings.length;
-    }
-
-    @Override
-    public Token<?> getNextToken() throws FunctionNotDefinedException {
-        return tokenFactory.getToken(tokenStrings[pos++]);
+    @Test
+    public void testGetNextToken() throws Exception {
     }
 }
