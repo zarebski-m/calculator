@@ -28,8 +28,8 @@ import java.util.logging.Logger;
 public abstract class Token<T> {
     protected static final Logger LOG = Logger.getLogger("Token");
 
-    public static enum Type {
-        Number, Function
+    public static enum TokenType {
+        Number, Function, OpenBracket, ClosedBracket
     }
 
     private final String rawValue;
@@ -42,7 +42,7 @@ public abstract class Token<T> {
         return rawValue;
     }
 
-    public abstract Type getType();
+    public abstract TokenType getTokenType();
 
     public abstract T getValue();
 }

@@ -23,26 +23,35 @@
  */
 package calculator.parse.token;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-public class NumberTokenTest {
-    @Test
-    public void testBuild_properValue() {
-        final Double expected = 12.3;
-        final String str = String.valueOf(expected);
-
-        final NumberToken token = new NumberToken(str);
-
-        assertEquals(Token.TokenType.Number, token.getTokenType());
-        assertEquals(expected, token.getValue());
-        assertEquals(str, token.getRawValue());
+public abstract class BracketToken extends Token<Void> {
+    public BracketToken(final String rawValue) {
+        super(rawValue);
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void testBuild_wrongValue() {
-        final String str = "not a number";
-        final NumberToken token = new NumberToken(str);
+    @Override
+    public final Void getValue() {
+        return null;
+    }
+
+    public static class Open extends BracketToken {
+        public Open(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.OpenBracket;
+        }
+    }
+
+    public static class Closed extends BracketToken {
+        public Closed(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.ClosedBracket;
+        }
     }
 }

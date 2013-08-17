@@ -34,8 +34,8 @@ public class OperatorToken extends Token<Function> {
     }
 
     @Override
-    public final Type getType() {
-        return Type.Function;
+    public final TokenType getTokenType() {
+        return TokenType.Function;
     }
 
     @Override

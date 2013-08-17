@@ -32,8 +32,8 @@ public class NumberToken extends Token<Double> {
     }
 
     @Override
-    public final Type getType() {
-        return Type.Number;
+    public final TokenType getTokenType() {
+        return TokenType.Number;
     }
 
     @Override
