@@ -21,24 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.exception;
 
-public abstract class Token<T> {
-    public static enum TokenType {
-        Number, Function, OpenBracket, ClosedBracket, Comma
+public class NotEnoughParametersException extends Exception {
+    public NotEnoughParametersException(final String message, final Exception e) {
+        super(message, e);
     }
-
-    private final String rawValue;
-
-    public Token(final String rawValue) {
-        this.rawValue = rawValue;
-    }
-
-    public final String getRawValue() {
-        return rawValue;
-    }
-
-    public abstract TokenType getTokenType();
-
-    public abstract T getValue();
 }

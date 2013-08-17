@@ -27,9 +27,10 @@ import static calculator.parse.token.Token.TokenType.Number;
 
 import calculator.exception.ExpressionExecuteException;
 import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
-import calculator.function.SpecialFunction;
+import calculator.function.TerminalFunction;
 import calculator.parse.SimpleTokenizer;
 import calculator.parse.Tokenizer;
 import calculator.parse.token.NumberToken;
@@ -56,25 +57,23 @@ public class Calculator {
 
     public void execute(final String expression) throws ExpressionExecuteException {
         Tokenizer tokenizer = new SimpleTokenizer(expression, tokenFactory);
+        try {
+            while (tokenizer.hasNextToken()) {
 
-        while (tokenizer.hasNextToken()) {
-            final Token<?> token;
-            try {
-                token = tokenizer.getNextToken();
-            } catch (FunctionNotDefinedException ex) {
-                throw new ExpressionExecuteException(expression, ex);
+                final Token<?> token = tokenizer.getNextToken();
+                handleToken(token);
             }
 
-            handleToken(token);
-        }
-
-        while (!functions.isEmpty()) {
-            final Function function = functions.pop();
-            function.apply(values);
+            while (!functions.isEmpty()) {
+                final Function function = functions.pop();
+                function.apply(values);
+            }
+        } catch (FunctionNotDefinedException | NotEnoughParametersException ex) {
+            throw new ExpressionExecuteException(expression, ex);
         }
     }
 
-    private void handleToken(final Token<?> token) {
+    private void handleToken(final Token<?> token) throws ExpressionExecuteException, NotEnoughParametersException {
         switch (token.getTokenType()) {
             case Number:
                 handleNumber(token);
@@ -101,7 +100,8 @@ public class Calculator {
         values.push(numberToken.getValue());
     }
 
-    private void handleFunction(final Token<?> token) {
+    private void handleFunction(final Token<?> token) throws ExpressionExecuteException,
+                                                             NotEnoughParametersException {
         final OperatorToken functionToken = (OperatorToken)token;
         while (!functions.isEmpty() && shouldExecute(functions.peek(), functionToken.getValue())) {
             final Function function = functions.pop();
@@ -122,18 +122,18 @@ public class Calculator {
     }
 
     private void handleOpenBracket() {
-        functions.push(new SpecialFunction());
+        functions.push(new TerminalFunction());
     }
 
-    private void handleClosedBracket() {
+    private void handleClosedBracket() throws ExpressionExecuteException, NotEnoughParametersException {
         handleComma();
         if (!functions.isEmpty()) {
             functions.pop();
         }
     }
 
-    private void handleComma() {
-        while (!functions.isEmpty() && functions.peek().getPriority() > SpecialFunction.PRIORITY_SPECIAL) {
+    private void handleComma() throws ExpressionExecuteException, NotEnoughParametersException {
+        while (!functions.isEmpty() && functions.peek().getPriority() > TerminalFunction.PRIORITY_SPECIAL) {
             final Function function = functions.pop();
             function.apply(values);
         }

@@ -23,6 +23,8 @@
  */
 package calculator.function;
 
+import calculator.exception.NotEnoughParametersException;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public abstract class MathFunction implements Function {
@@ -40,138 +42,206 @@ public abstract class MathFunction implements Function {
 
     public static final class Sinus extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.sin(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.sin(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class Cosinus extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.cos(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.cos(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class Tangent extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.tan(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.tan(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class ArcSinus extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.asin(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.asin(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class ArcCosinus extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.acos(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.acos(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class ArcTangent extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.atan(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.atan(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class ArcTangent2 extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val2 = stack.pop();
-            final double val1 = stack.pop();
-            stack.push(Math.atan2(val1, val2));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val2 = stack.pop();
+                final double val1 = stack.pop();
+                stack.push(Math.atan2(val1, val2));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class SinusHyperbolic extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.sinh(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.sinh(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class CosinusHyperbolic extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.cosh(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.cosh(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class TangentHyperbolic extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.tanh(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.tanh(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class AbsoluteValue extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.abs(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.abs(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class Log extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.log(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.log(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class Exp extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.exp(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.exp(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class Signum extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.signum(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.signum(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class SquareRoot extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.sqrt(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.sqrt(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class DegreesToRadians extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.toRadians(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.toRadians(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 
     public static final class RadiansToDegrees extends MathFunction {
         @Override
-        public void apply(final Stack<Double> stack) {
-            final double val = stack.pop();
-            stack.push(Math.toDegrees(val));
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(Math.toDegrees(val));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("sin", e);
+            }
         }
     }
 }

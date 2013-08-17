@@ -25,7 +25,7 @@ package calculator.function;
 
 import java.util.Stack;
 
-public final class SpecialFunction implements Function {
+public final class TerminalFunction implements Function {
     public static final int PRIORITY_SPECIAL = -1;
 
     @Override
