@@ -23,11 +23,17 @@
  */
 package calculator.parse;
 
-import calculator.exception.FunctionNotDefinedException;
-import calculator.parse.token.Token;
+import org.junit.Test;
 
-public interface Tokenizer {
-    boolean hasNextToken();
+public class SimpleTokenizerTest {
+    public SimpleTokenizerTest() {
+    }
 
-    Token<?> getNextToken() throws FunctionNotDefinedException;
+    @Test
+    public void testHasNextToken() {
+    }
+
+    @Test
+    public void testGetNextToken() throws Exception {
+    }
 }

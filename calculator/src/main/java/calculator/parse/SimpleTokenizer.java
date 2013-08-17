@@ -21,13 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator;
+package calculator.parse;
 
-public final class App {
-    private App() {
+import calculator.exception.FunctionNotDefinedException;
+import calculator.parse.token.Token;
+import calculator.parse.token.TokenFactory;
+
+public class SimpleTokenizer implements Tokenizer {
+    private final String[] tokenStrings;
+
+    private int pos = 0;
+
+    private final TokenFactory tokenFactory;
+
+    public SimpleTokenizer(final String input, final TokenFactory tokenFactory) {
+        this.tokenStrings = input.split("\\s");
+        this.tokenFactory = tokenFactory;
     }
 
-    public static void main(final String[] args) {
-        System.out.println("Hello World!");
+    @Override
+    public boolean hasNextToken() {
+        return pos < tokenStrings.length;
+    }
+
+    @Override
+    public Token<?> getNextToken() throws FunctionNotDefinedException {
+        return tokenFactory.getToken(tokenStrings[pos++]);
     }
 }

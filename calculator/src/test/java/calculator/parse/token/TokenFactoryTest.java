@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse;
+package calculator.parse.token;
 
-import calculator.exception.FunctionNotDefinedException;
-import calculator.parse.token.Token;
+import org.junit.Test;
 
-public interface Tokenizer {
-    boolean hasNextToken();
-
-    Token<?> getNextToken() throws FunctionNotDefinedException;
+public class TokenFactoryTest {
+    @Test
+    public void testGetToken() throws Exception {
+    }
 }
