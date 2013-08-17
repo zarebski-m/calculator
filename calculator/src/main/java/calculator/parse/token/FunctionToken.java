@@ -25,10 +25,10 @@ package calculator.parse.token;
 
 import calculator.function.Function;
 
-public class OperatorToken extends Token<Function> {
+public class FunctionToken extends Token<Function> {
     private final Function function;
 
-    public OperatorToken(final String rawValue, final Function function) {
+    public FunctionToken(final String rawValue, final Function function) {
         super(rawValue);
         this.function = function;
     }

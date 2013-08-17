@@ -44,7 +44,7 @@ public class TokenFactory {
             case Number:
                 return new NumberToken(tokenString);
             case Function:
-                return new OperatorToken(tokenString, functionFactory.getFunction(tokenString));
+                return new FunctionToken(tokenString, functionFactory.getFunction(tokenString));
             default:
                 throw new UnsupportedOperationException("Unsupported token type for token string: " + tokenString);
         }

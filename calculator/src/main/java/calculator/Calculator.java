@@ -34,7 +34,7 @@ import calculator.function.TerminalFunction;
 import calculator.parse.SpaceTokenizer;
 import calculator.parse.Tokenizer;
 import calculator.parse.token.NumberToken;
-import calculator.parse.token.OperatorToken;
+import calculator.parse.token.FunctionToken;
 import calculator.parse.token.Token;
 import calculator.parse.token.TokenFactory;
 import java.util.Stack;
@@ -100,7 +100,7 @@ public class Calculator {
 
     private void handleFunction(final Token<?> token) throws ExpressionExecuteException,
                                                              NotEnoughParametersException {
-        final OperatorToken functionToken = (OperatorToken)token;
+        final FunctionToken functionToken = (FunctionToken)token;
         while (!functions.isEmpty() && shouldExecute(functions.peek(), functionToken.getValue())) {
             final Function function = functions.pop();
             function.apply(values);

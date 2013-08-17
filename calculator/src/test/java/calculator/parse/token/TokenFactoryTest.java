@@ -61,7 +61,7 @@ public class TokenFactoryTest {
         final Token<?> token = testedObject.getToken(tokenString);
 
         assertEquals(Token.TokenType.Function, token.getTokenType());
-        assertTrue(token instanceof OperatorToken);
+        assertTrue(token instanceof FunctionToken);
     }
 
     @Test(expected = FunctionNotDefinedException.class)
