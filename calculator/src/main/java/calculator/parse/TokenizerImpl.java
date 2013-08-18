@@ -36,7 +36,7 @@ public class TokenizerImpl implements Tokenizer {
     private int pos = 0;
 
     public TokenizerImpl(final String input) {
-        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s(),+-/^%]"));
+        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
     }
 
     @Override
