@@ -31,8 +31,8 @@ import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
 import calculator.function.builtin.TerminalFunction;
-import calculator.parse.TokenizerImpl;
-import calculator.parse.Tokenizer;
+import calculator.parse.ExpressionTokenizerImpl;
+import calculator.parse.ExpressionTokenizer;
 import calculator.parse.token.FunctionToken;
 import calculator.parse.token.NumberToken;
 import calculator.parse.token.Token;
@@ -54,7 +54,7 @@ public class Calculator {
     }
 
     public void execute(final String expression) throws ExpressionExecuteException {
-        Tokenizer tokenizer = new TokenizerImpl(expression);
+        ExpressionTokenizer tokenizer = new ExpressionTokenizerImpl(expression);
         try {
             while (tokenizer.hasNextToken()) {
                 String tokenString = tokenizer.getNextToken();

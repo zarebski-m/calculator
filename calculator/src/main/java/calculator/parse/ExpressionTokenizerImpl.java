@@ -23,7 +23,7 @@
  */
 package calculator.parse;
 
-public class TokenizerImpl implements Tokenizer {
+public class ExpressionTokenizerImpl implements ExpressionTokenizer {
     /**
      * Used to split without skipping delimiters. For example:
      * <code>"foo*bar".split(WITH_DELIMITER.format("[*]"))</code> becomes:
@@ -35,7 +35,7 @@ public class TokenizerImpl implements Tokenizer {
 
     private int pos = 0;
 
-    public TokenizerImpl(final String input) {
+    public ExpressionTokenizerImpl(final String input) {
         this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
     }
 

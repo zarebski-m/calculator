@@ -23,7 +23,7 @@
  */
 package calculator.parse;
 
-public interface Tokenizer {
+public interface ExpressionTokenizer {
     boolean hasNextToken();
 
     String getNextToken();

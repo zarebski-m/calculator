@@ -29,7 +29,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TokenizerImplTest {
+public class ExpressionTokenizerImplTest {
     @Test
     public void testHasNextToken() {
     }
@@ -56,7 +56,7 @@ public class TokenizerImplTest {
     private void checkTokenizer(final String input, final String... strings) {
         final List<String> expected = Arrays.asList(strings);
 
-        Tokenizer tokenizer = new TokenizerImpl(input);
+        ExpressionTokenizer tokenizer = new ExpressionTokenizerImpl(input);
 
         final List<String> result = new ArrayList<>();
         while (tokenizer.hasNextToken()) {
