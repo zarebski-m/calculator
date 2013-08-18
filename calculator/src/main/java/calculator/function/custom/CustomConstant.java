@@ -24,19 +24,19 @@
 package calculator.function.custom;
 
 import calculator.exception.NotEnoughParametersException;
-import calculator.function.AbstractFunction;
+import calculator.function.AbstractConstant;
 import java.util.Stack;
 
-public class CustomFunction extends AbstractFunction {
+public class CustomConstant extends AbstractConstant {
     private final CustomFunctionExecutor executor;
 
-    public CustomFunction(final CustomFunctionExecutor executor) {
+    public CustomConstant(final CustomFunctionExecutor executor) {
         super();
         this.executor = executor;
     }
 
     @Override
-    public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+    public void apply(Stack<Double> stack) throws NotEnoughParametersException {
         executor.execute(stack);
     }
 }
