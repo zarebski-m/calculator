@@ -21,10 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse;
+package calculator.parser;
 
-public interface ExpressionTokenizer {
-    boolean hasNextToken();
+public class ExpressionTokenizerImpl implements ExpressionTokenizer {
+    /**
+     * Used to split without skipping delimiters. For example:
+     * <code>"foo*bar".split(WITH_DELIMITER.format("[*]"))</code> becomes:
+     * <code>"foo", "*", "bar"</code>
+     */
+    private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
-    String getNextToken();
+    private final String[] tokenStrings;
+
+    private int pos = 0;
+
+    public ExpressionTokenizerImpl(final String input) {
+        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
+    }
+
+    @Override
+    public boolean hasNextToken() {
+        return pos < tokenStrings.length;
+    }
+
+    @Override
+    public String getNextToken() {
+        final String result = tokenStrings[pos++];
+        while (pos < tokenStrings.length && tokenStrings[pos].matches("\\s")) {
+            // skip white spaces
+            ++pos;
+        }
+        return result;
+    }
 }

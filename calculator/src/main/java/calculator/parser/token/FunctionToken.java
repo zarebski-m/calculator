@@ -21,48 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.parser.token;
 
-public abstract class BracketToken extends Token<Void> {
-    public BracketToken(final String rawValue) {
+import calculator.function.Function;
+
+public class FunctionToken extends Token<Function> {
+    private final Function function;
+
+    public FunctionToken(final String rawValue, final Function function) {
         super(rawValue);
+        this.function = function;
     }
 
     @Override
-    public final Void getValue() {
-        return null;
+    public final TokenType getTokenType() {
+        return TokenType.Function;
     }
 
-    public static class Open extends BracketToken {
-        public Open(final String rawValue) {
-            super(rawValue);
-        }
-
-        @Override
-        public final TokenType getTokenType() {
-            return TokenType.OpenBracket;
-        }
-    }
-
-    public static class Closed extends BracketToken {
-        public Closed(final String rawValue) {
-            super(rawValue);
-        }
-
-        @Override
-        public final TokenType getTokenType() {
-            return TokenType.ClosedBracket;
-        }
-    }
-
-    public static class Comma extends BracketToken {
-        public Comma(final String rawValue) {
-            super(rawValue);
-        }
-
-        @Override
-        public final TokenType getTokenType() {
-            return TokenType.Comma;
-        }
+    @Override
+    public final Function getValue() {
+        return function;
     }
 }

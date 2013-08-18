@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.parser.token;
 
 public abstract class Token<T> {
     public static enum TokenType {

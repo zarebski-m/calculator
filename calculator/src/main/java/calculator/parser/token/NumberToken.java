@@ -21,25 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.parser.token;
 
-import calculator.function.Function;
+public class NumberToken extends Token<Double> {
+    private final double value;
 
-public class FunctionToken extends Token<Function> {
-    private final Function function;
-
-    public FunctionToken(final String rawValue, final Function function) {
+    public NumberToken(final String rawValue) {
         super(rawValue);
-        this.function = function;
+        value = Double.valueOf(getRawValue());
     }
 
     @Override
     public final TokenType getTokenType() {
-        return TokenType.Function;
+        return TokenType.Number;
     }
 
     @Override
-    public final Function getValue() {
-        return function;
+    public final Double getValue() {
+        return Double.valueOf(value);
     }
 }

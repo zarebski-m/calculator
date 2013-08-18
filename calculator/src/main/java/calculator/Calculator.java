@@ -23,7 +23,7 @@
  */
 package calculator;
 
-import static calculator.parse.token.Token.TokenType.Number;
+import static calculator.parser.token.Token.TokenType.Number;
 
 import calculator.exception.ExpressionExecuteException;
 import calculator.exception.FunctionNotDefinedException;
@@ -31,12 +31,12 @@ import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
 import calculator.function.builtin.TerminalFunction;
-import calculator.parse.ExpressionTokenizerImpl;
-import calculator.parse.ExpressionTokenizer;
-import calculator.parse.token.FunctionToken;
-import calculator.parse.token.NumberToken;
-import calculator.parse.token.Token;
-import calculator.parse.token.TokenFactory;
+import calculator.parser.ExpressionTokenizerImpl;
+import calculator.parser.ExpressionTokenizer;
+import calculator.parser.token.FunctionToken;
+import calculator.parser.token.NumberToken;
+import calculator.parser.token.Token;
+import calculator.parser.token.TokenFactory;
 import java.util.Stack;
 
 public class Calculator {

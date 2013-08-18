@@ -21,23 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.parse.token;
+package calculator.parser.token;
 
-public class NumberToken extends Token<Double> {
-    private final double value;
-
-    public NumberToken(final String rawValue) {
+public abstract class BracketToken extends Token<Void> {
+    public BracketToken(final String rawValue) {
         super(rawValue);
-        value = Double.valueOf(getRawValue());
     }
 
     @Override
-    public final TokenType getTokenType() {
-        return TokenType.Number;
+    public final Void getValue() {
+        return null;
     }
 
-    @Override
-    public final Double getValue() {
-        return Double.valueOf(value);
+    public static class Open extends BracketToken {
+        public Open(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.OpenBracket;
+        }
+    }
+
+    public static class Closed extends BracketToken {
+        public Closed(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.ClosedBracket;
+        }
+    }
+
+    public static class Comma extends BracketToken {
+        public Comma(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.Comma;
+        }
     }
 }

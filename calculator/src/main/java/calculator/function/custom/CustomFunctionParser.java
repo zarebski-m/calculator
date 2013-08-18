@@ -23,8 +23,8 @@
  */
 package calculator.function.custom;
 
-public class CustomFunctionFactory {
-    public CustomFunction getFunction() {
+public class CustomFunctionParser {
+    public CustomFunctionExecutor getExecutor() {
         return null;
     }
 }
