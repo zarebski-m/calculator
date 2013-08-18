@@ -21,25 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.builtin;
 
+import calculator.function.AbstractConstant;
 import java.util.Stack;
 
-public final class TerminalFunction implements Function {
-    public static final int PRIORITY_SPECIAL = -1;
-
-    @Override
-    public int getPriority() {
-        return PRIORITY_SPECIAL;
+public abstract class BuiltinConstant {
+    public static final class Pi extends AbstractConstant {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.PI);
+        }
     }
 
-    @Override
-    public Associativity getAssociativity() {
-        return Associativity.Right;
-    }
-
-    @Override
-    public void apply(final Stack<Double> stack) {
-        // nothing to do
+    public static final class E extends AbstractConstant {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.E);
+        }
     }
 }

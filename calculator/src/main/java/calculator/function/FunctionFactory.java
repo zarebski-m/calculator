@@ -23,6 +23,9 @@
  */
 package calculator.function;
 
+import calculator.function.builtin.BuiltinFunction;
+import calculator.function.builtin.BuiltinConstant;
+import calculator.function.builtin.BinaryOperatorFunction;
 import calculator.exception.FunctionAlreadyExistsException;
 import calculator.exception.FunctionNotDefinedException;
 import calculator.exception.WrongFunctionNameException;
@@ -37,36 +40,36 @@ public class FunctionFactory {
 
     public FunctionFactory() {
         // operators
-        functions.put("+", new OperatorFunction.Add());
-        functions.put("-", new OperatorFunction.Substract());
-        functions.put("*", new OperatorFunction.Multiply());
-        functions.put("/", new OperatorFunction.Divide());
-        functions.put("%", new OperatorFunction.Modulo());
-        functions.put("^", new OperatorFunction.Power());
+        functions.put("+", new BinaryOperatorFunction.Add());
+        functions.put("-", new BinaryOperatorFunction.Substract());
+        functions.put("*", new BinaryOperatorFunction.Multiply());
+        functions.put("/", new BinaryOperatorFunction.Divide());
+        functions.put("%", new BinaryOperatorFunction.Modulo());
+        functions.put("^", new BinaryOperatorFunction.Power());
 
         // builtin functions
-        functions.put("sin", new MathFunction.Sinus());
-        functions.put("cos", new MathFunction.Cosinus());
-        functions.put("tan", new MathFunction.Tangent());
-        functions.put("asin", new MathFunction.ArcSinus());
-        functions.put("acos", new MathFunction.ArcCosinus());
-        functions.put("atan", new MathFunction.ArcTangent());
-        functions.put("atan2", new MathFunction.ArcTangent2());
-        functions.put("sinh", new MathFunction.SinusHyperbolic());
-        functions.put("cosh", new MathFunction.CosinusHyperbolic());
-        functions.put("tanh", new MathFunction.TangentHyperbolic());
+        functions.put("sin", new BuiltinFunction.Sinus());
+        functions.put("cos", new BuiltinFunction.Cosinus());
+        functions.put("tan", new BuiltinFunction.Tangent());
+        functions.put("asin", new BuiltinFunction.ArcSinus());
+        functions.put("acos", new BuiltinFunction.ArcCosinus());
+        functions.put("atan", new BuiltinFunction.ArcTangent());
+        functions.put("atan2", new BuiltinFunction.ArcTangent2());
+        functions.put("sinh", new BuiltinFunction.SinusHyperbolic());
+        functions.put("cosh", new BuiltinFunction.CosinusHyperbolic());
+        functions.put("tanh", new BuiltinFunction.TangentHyperbolic());
 
-        functions.put("abs", new MathFunction.AbsoluteValue());
-        functions.put("log", new MathFunction.Log());
-        functions.put("exp", new MathFunction.Exp());
-        functions.put("sgn", new MathFunction.Signum());
-        functions.put("sqrt", new MathFunction.SquareRoot());
-        functions.put("d2r", new MathFunction.DegreesToRadians());
-        functions.put("r2d", new MathFunction.RadiansToDegrees());
+        functions.put("abs", new BuiltinFunction.AbsoluteValue());
+        functions.put("log", new BuiltinFunction.Log());
+        functions.put("exp", new BuiltinFunction.Exp());
+        functions.put("sgn", new BuiltinFunction.Signum());
+        functions.put("sqrt", new BuiltinFunction.SquareRoot());
+        functions.put("d2r", new BuiltinFunction.DegreesToRadians());
+        functions.put("r2d", new BuiltinFunction.RadiansToDegrees());
 
         // builtin constants
-        functions.put("PI", new ConstantFunction.Pi());
-        functions.put("E", new ConstantFunction.E());
+        functions.put("PI", new BuiltinConstant.Pi());
+        functions.put("E", new BuiltinConstant.E());
     }
 
     public Function getFunction(final String name) throws FunctionNotDefinedException {

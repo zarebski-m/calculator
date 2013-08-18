@@ -23,35 +23,19 @@
  */
 package calculator.function;
 
-import java.util.Stack;
-
 /**
  * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
  */
-public abstract class ConstantFunction implements Function {
-    private static final int PRIORITY_CONSTANT = 100;
+public abstract class AbstractFunction implements Function {
+    private static final int PRIORITY_FUNCTION = 10;
 
     @Override
     public final int getPriority() {
-        return PRIORITY_CONSTANT;
+        return PRIORITY_FUNCTION;
     }
 
     @Override
     public final Associativity getAssociativity() {
-        return Associativity.Left;
-    }
-
-    public static final class Pi extends ConstantFunction {
-        @Override
-        public void apply(final Stack<Double> stack) {
-            stack.push(Math.PI);
-        }
-    }
-
-    public static final class E extends ConstantFunction {
-        @Override
-        public void apply(final Stack<Double> stack) {
-            stack.push(Math.E);
-        }
+        return Associativity.Right;
     }
 }

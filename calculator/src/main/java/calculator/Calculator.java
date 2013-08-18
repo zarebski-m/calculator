@@ -30,7 +30,7 @@ import calculator.exception.FunctionNotDefinedException;
 import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
-import calculator.function.TerminalFunction;
+import calculator.function.builtin.TerminalFunction;
 import calculator.parse.TokenizerImpl;
 import calculator.parse.Tokenizer;
 import calculator.parse.token.FunctionToken;
@@ -131,7 +131,7 @@ public class Calculator {
     }
 
     private void handleComma() throws ExpressionExecuteException, NotEnoughParametersException {
-        while (!functions.isEmpty() && functions.peek().getPriority() > TerminalFunction.PRIORITY_SPECIAL) {
+        while (!functions.isEmpty() && functions.peek().getPriority() > TerminalFunction.PRIORITY_TERMINAL) {
             final Function function = functions.pop();
             function.apply(values);
         }

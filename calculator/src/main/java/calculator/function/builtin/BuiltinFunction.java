@@ -21,26 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.builtin;
 
 import calculator.exception.NotEnoughParametersException;
+import calculator.function.AbstractFunction;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-public abstract class MathFunction implements Function {
-    private static final int PRIORITY_FUNCTION = 10;
-
-    @Override
-    public final int getPriority() {
-        return PRIORITY_FUNCTION;
-    }
-
-    @Override
-    public final Associativity getAssociativity() {
-        return Associativity.Right;
-    }
-
-    public static final class Sinus extends MathFunction {
+public final class BuiltinFunction {
+    public static final class Sinus extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -52,7 +41,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class Cosinus extends MathFunction {
+    public static final class Cosinus extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -64,7 +53,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class Tangent extends MathFunction {
+    public static final class Tangent extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -76,7 +65,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class ArcSinus extends MathFunction {
+    public static final class ArcSinus extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -88,7 +77,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class ArcCosinus extends MathFunction {
+    public static final class ArcCosinus extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -100,7 +89,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class ArcTangent extends MathFunction {
+    public static final class ArcTangent extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -112,7 +101,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class ArcTangent2 extends MathFunction {
+    public static final class ArcTangent2 extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -125,7 +114,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class SinusHyperbolic extends MathFunction {
+    public static final class SinusHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -137,7 +126,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class CosinusHyperbolic extends MathFunction {
+    public static final class CosinusHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -149,7 +138,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class TangentHyperbolic extends MathFunction {
+    public static final class TangentHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -161,7 +150,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class AbsoluteValue extends MathFunction {
+    public static final class AbsoluteValue extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -173,7 +162,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class Log extends MathFunction {
+    public static final class Log extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -185,7 +174,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class Exp extends MathFunction {
+    public static final class Exp extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -197,7 +186,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class Signum extends MathFunction {
+    public static final class Signum extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -209,7 +198,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class SquareRoot extends MathFunction {
+    public static final class SquareRoot extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -221,7 +210,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class DegreesToRadians extends MathFunction {
+    public static final class DegreesToRadians extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -233,7 +222,7 @@ public abstract class MathFunction implements Function {
         }
     }
 
-    public static final class RadiansToDegrees extends MathFunction {
+    public static final class RadiansToDegrees extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {

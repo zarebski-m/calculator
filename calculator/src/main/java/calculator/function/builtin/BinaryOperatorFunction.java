@@ -21,43 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.builtin;
 
 import calculator.exception.NotEnoughParametersException;
+import calculator.function.Function;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-public final class OperatorFunction {
-    private abstract static class Operator implements Function {
-        protected static final int PRIORITY_ADDITIVE = 1;
+public abstract class BinaryOperatorFunction implements Function {
+    protected static final int PRIORITY_ADDITIVE = 1;
 
-        protected static final int PRIORITY_MULTIPLICATIVE = 2;
+    protected static final int PRIORITY_MULTIPLICATIVE = 2;
 
-        protected static final int PRIORITY_POWER = 3;
+    protected static final int PRIORITY_POWER = 3;
 
-        private double lhs;
+    private double lhs;
 
-        private double rhs;
+    private double rhs;
 
-        protected final double getLhs() {
-            return lhs;
-        }
+    protected final double getLhs() {
+        return lhs;
+    }
 
-        protected final double getRhs() {
-            return rhs;
-        }
+    protected final double getRhs() {
+        return rhs;
+    }
 
-        protected final void prepareParams(final Stack<Double> stack) throws NotEnoughParametersException {
-            try {
-                rhs = stack.pop();
-                lhs = stack.pop();
-            } catch (final EmptyStackException e) {
-                throw new NotEnoughParametersException("operator", e);
-            }
+    protected final void prepareParams(final Stack<Double> stack) throws NotEnoughParametersException {
+        try {
+            rhs = stack.pop();
+            lhs = stack.pop();
+        } catch (final EmptyStackException e) {
+            throw new NotEnoughParametersException("operator", e);
         }
     }
 
-    public static final class Add extends Operator {
+    public static final class Add extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_ADDITIVE;
@@ -75,7 +74,7 @@ public final class OperatorFunction {
         }
     }
 
-    public static final class Substract extends Operator {
+    public static final class Substract extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_ADDITIVE;
@@ -93,7 +92,7 @@ public final class OperatorFunction {
         }
     }
 
-    public static final class Multiply extends Operator {
+    public static final class Multiply extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_MULTIPLICATIVE;
@@ -111,7 +110,7 @@ public final class OperatorFunction {
         }
     }
 
-    public static final class Divide extends Operator {
+    public static final class Divide extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_MULTIPLICATIVE;
@@ -129,7 +128,7 @@ public final class OperatorFunction {
         }
     }
 
-    public static final class Modulo extends Operator {
+    public static final class Modulo extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_MULTIPLICATIVE;
@@ -147,7 +146,7 @@ public final class OperatorFunction {
         }
     }
 
-    public static final class Power extends Operator {
+    public static final class Power extends BinaryOperatorFunction {
         @Override
         public int getPriority() {
             return PRIORITY_POWER;

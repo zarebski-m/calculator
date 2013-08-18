@@ -23,6 +23,7 @@
  */
 package calculator.function;
 
+import calculator.function.builtin.BuiltinFunction;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -70,9 +71,9 @@ public class FunctionFactoryTest {
     @Test
     public void testRegisterFunction_success() throws Exception {
         final String name = "sin_new";
-        factory.registerFunction(name, new MathFunction.Sinus());
+        factory.registerFunction(name, new BuiltinFunction.Sinus());
         final Function function = factory.getFunction(name);
-        assertTrue(function instanceof MathFunction.Sinus);
+        assertTrue(function instanceof BuiltinFunction.Sinus);
     }
 
     @Test(expected = FunctionAlreadyExistsException.class)
