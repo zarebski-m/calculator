@@ -31,10 +31,10 @@ import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
 import calculator.function.TerminalFunction;
-import calculator.parse.SpaceTokenizer;
+import calculator.parse.SmartTokenizer;
 import calculator.parse.Tokenizer;
-import calculator.parse.token.NumberToken;
 import calculator.parse.token.FunctionToken;
+import calculator.parse.token.NumberToken;
 import calculator.parse.token.Token;
 import calculator.parse.token.TokenFactory;
 import java.util.Stack;
@@ -54,11 +54,11 @@ public class Calculator {
     }
 
     public void execute(final String expression) throws ExpressionExecuteException {
-        Tokenizer tokenizer = new SpaceTokenizer(expression, tokenFactory);
+        Tokenizer tokenizer = new SmartTokenizer(expression);
         try {
             while (tokenizer.hasNextToken()) {
-
-                final Token<?> token = tokenizer.getNextToken();
+                String tokenString = tokenizer.getNextToken();
+                final Token<?> token = tokenFactory.getToken(tokenString);
                 handleToken(token);
             }
 

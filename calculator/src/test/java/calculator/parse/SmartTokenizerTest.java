@@ -23,22 +23,33 @@
  */
 package calculator.parse;
 
-public class SpaceTokenizer implements Tokenizer {
-    private final String[] tokenStrings;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
-    private int pos = 0;
-
-    public SpaceTokenizer(final String input) {
-        this.tokenStrings = input.split("\\s");
+/**
+ *
+ * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
+ */
+public class SmartTokenizerTest {
+    @Test
+    public void testHasNextToken() {
     }
 
-    @Override
-    public boolean hasNextToken() {
-        return pos < tokenStrings.length;
-    }
+    @Test
+    public void testGetNextToken() throws Exception {
+        final String input = "sin\t(12*5 )";
+        final List<String> expected = Arrays.asList("sin", "(", "12", "*", "5", ")");
 
-    @Override
-    public String getNextToken() {
-        return tokenStrings[pos++];
+        Tokenizer tokenizer = new SmartTokenizer(input);
+
+        final List<String> result = new ArrayList<>();
+        while (tokenizer.hasNextToken()) {
+            result.add(tokenizer.getNextToken());
+        }
+
+        Assert.assertEquals(expected, result);
     }
 }

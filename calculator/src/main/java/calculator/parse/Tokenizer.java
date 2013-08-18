@@ -23,11 +23,8 @@
  */
 package calculator.parse;
 
-import calculator.exception.FunctionNotDefinedException;
-import calculator.parse.token.Token;
-
 public interface Tokenizer {
     boolean hasNextToken();
 
-    Token<?> getNextToken() throws FunctionNotDefinedException;
+    String getNextToken();
 }

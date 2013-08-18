@@ -23,27 +23,29 @@
  */
 package calculator.parse;
 
-import calculator.exception.FunctionNotDefinedException;
-import calculator.parse.token.Token;
-import calculator.parse.token.TokenFactory;
-
 public class SmartTokenizer implements Tokenizer {
-    private final TokenFactory tokenFactory;
+    static public final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
-    private final String input;
+    private final String[] tokenStrings;
 
-    public SmartTokenizer(final String input, final TokenFactory tokenFactory) {
-        this.input = input;
-        this.tokenFactory = tokenFactory;
+    private int pos = 0;
+
+    public SmartTokenizer(final String input) {
+        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s(),+-/^%]"));
     }
 
     @Override
     public boolean hasNextToken() {
-        return false;
+        return pos < tokenStrings.length;
     }
 
     @Override
-    public Token<?> getNextToken() throws FunctionNotDefinedException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getNextToken() {
+        final String result = tokenStrings[pos++];
+        while (pos < tokenStrings.length && tokenStrings[pos].matches("\\s")) {
+            // skip white spaces
+            ++pos;
+        }
+        return result;
     }
 }
