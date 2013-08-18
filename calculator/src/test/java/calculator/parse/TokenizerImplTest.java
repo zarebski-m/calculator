@@ -23,14 +23,29 @@
  */
 package calculator.parse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.Assert;
 import org.junit.Test;
 
-public class SpaceTokenizerTest {
+public class TokenizerImplTest {
     @Test
     public void testHasNextToken() {
     }
 
     @Test
     public void testGetNextToken() throws Exception {
+        final String input = "sin\t(12*5 )";
+        final List<String> expected = Arrays.asList("sin", "(", "12", "*", "5", ")");
+
+        Tokenizer tokenizer = new TokenizerImpl(input);
+
+        final List<String> result = new ArrayList<>();
+        while (tokenizer.hasNextToken()) {
+            result.add(tokenizer.getNextToken());
+        }
+
+        Assert.assertEquals(expected, result);
     }
 }

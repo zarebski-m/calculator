@@ -23,13 +23,20 @@
  */
 package calculator.parse;
 
-public class SpaceTokenizer implements Tokenizer {
+public class TokenizerImpl implements Tokenizer {
+    /**
+     * Used to split without skipping delimiters. For example:
+     * <code>"foo*bar".split(WITH_DELIMITER.format("[*]"))</code> becomes:
+     * <code>"foo", "*", "bar"</code>
+     */
+    private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+
     private final String[] tokenStrings;
 
     private int pos = 0;
 
-    public SpaceTokenizer(final String input) {
-        this.tokenStrings = input.split("\\s");
+    public TokenizerImpl(final String input) {
+        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s(),+-/^%]"));
     }
 
     @Override
@@ -39,6 +46,11 @@ public class SpaceTokenizer implements Tokenizer {
 
     @Override
     public String getNextToken() {
-        return tokenStrings[pos++];
+        final String result = tokenStrings[pos++];
+        while (pos < tokenStrings.length && tokenStrings[pos].matches("\\s")) {
+            // skip white spaces
+            ++pos;
+        }
+        return result;
     }
 }
