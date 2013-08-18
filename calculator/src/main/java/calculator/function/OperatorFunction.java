@@ -23,6 +23,8 @@
  */
 package calculator.function;
 
+import calculator.exception.NotEnoughParametersException;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public final class OperatorFunction {
@@ -45,9 +47,13 @@ public final class OperatorFunction {
             return rhs;
         }
 
-        protected final void prepareParams(final Stack<Double> stack) {
-            rhs = stack.pop();
-            lhs = stack.pop();
+        protected final void prepareParams(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                rhs = stack.pop();
+                lhs = stack.pop();
+            } catch (final EmptyStackException e) {
+                throw new NotEnoughParametersException("operator", e);
+            }
         }
     }
 
@@ -63,7 +69,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(getLhs() + getRhs());
         }
@@ -81,7 +87,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(getLhs() - getRhs());
         }
@@ -99,7 +105,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(getLhs() * getRhs());
         }
@@ -117,7 +123,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(getLhs() / getRhs());
         }
@@ -135,7 +141,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(getLhs() % getRhs());
         }
@@ -153,7 +159,7 @@ public final class OperatorFunction {
         }
 
         @Override
-        public void apply(final Stack<Double> stack) {
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             prepareParams(stack);
             stack.push(Math.pow(getLhs(), getRhs()));
         }
