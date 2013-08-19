@@ -78,6 +78,12 @@ public class Command {
         return content;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder().append(type.toString()).append(" ").append(param).append(" ")
+                .append(content).toString();
+    }
+
     public static final class Builder {
         private static final Pattern simpleCommandPattern = Pattern.compile(":(\\w+)");
 

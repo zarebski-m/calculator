@@ -61,7 +61,7 @@ public class SimpleFunctionParser implements FunctionParser {
         public void execute(final Stack<Double> stack) throws ExpressionExecuteException {
             final double[] parameters = prepareParameters(stack);
             final String processedExpression = processExpression(functionBody, parameters);
-            stack.push(evaluator.execute(processedExpression));
+            stack.push(evaluator.evaluate(processedExpression));
         }
 
         private double[] prepareParameters(final Stack<Double> stack) throws NotEnoughParametersException {

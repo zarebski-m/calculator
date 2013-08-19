@@ -42,85 +42,86 @@ public class RPNEvaluatorTest {
     }
 
     @Test
-    public void testExecute_simpleExpression() throws Exception {
+    public void testEvaluate_simpleExpression() throws Exception {
         final String expression = "2 + 2";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(4.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_operatorPrecedence() throws Exception {
+    public void testEvaluate_operatorPrecedence() throws Exception {
         final String expression = "2 + 2 * 2";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(6.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_brackets() throws Exception {
+    public void testEvaluate_brackets() throws Exception {
         final String expression = "2 * ( 2 + 2 )";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(8.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_multiplicativeLeftToRight() throws Exception {
+    public void testEvaluate_multiplicativeLeftToRight() throws Exception {
         final String expression = "2 / 2 * 2";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(2.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_powerRightToLeft() throws Exception {
+    public void testEvaluate_powerRightToLeft() throws Exception {
         final String expression = "2 ^ 2 ^ 3";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(256.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_constant() throws Exception {
+    public void testEvaluate_constant() throws Exception {
         final String expression = "PI";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(Math.PI, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_function() throws Exception {
+    public void testEvaluate_function() throws Exception {
         final String expression = "sin ( 3.14159 )";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(Math.sin(3.14159), actual, EPSILON);
     }
 
     @Test
-    public void testExecute_functionWithOperator() throws Exception {
+    public void testEvaluate_functionWithOperator() throws Exception {
         final String expression = "sin ( 3.14 + 3.14 )";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(Math.sin(6.28), actual, EPSILON);
     }
 
     @Test
-    public void testExecute_operatorWithFunction() throws Exception {
+    public void testEvaluate_operatorWithFunction() throws Exception {
         final String expression = "1 - sin ( 3.14159 )";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(1.0 - Math.sin(3.14159), actual, EPSILON);
     }
 
     @Test
-    public void testExecute_functionChain() throws Exception {
+    public void testEvaluate_functionChain() throws Exception {
         final String expression = "exp ( sin ( PI ) )";
-        final double actual = testedObject.execute(expression);
+        final double actual = testedObject.evaluate(expression);
         assertEquals(1.0, actual, EPSILON);
     }
 
     @Test
-    public void testExecute_complexExpression() throws Exception {
-        final String expression = "1 + atan2 ( 2 + 2 * 2 , log ( exp ( 6 ) ) )";
-        final double actual = testedObject.execute(expression);
-        assertEquals(1 + Math.atan2(6.0, 6.0), actual, EPSILON);
+    public void testEvaluate_complexExpression() throws Exception {
+        final String expression = "1+atan2(2+2*2-2+2, log(exp(PI % E)))";
+        final double actual = testedObject.evaluate(expression);
+        assertEquals(1 + Math.atan2(2.0 + 2.0 * 2.0 - 2.0 + 2.0, Math.log(Math.exp(Math.PI % Math.E))), actual,
+                EPSILON);
     }
 
     @Test(expected = ExpressionExecuteException.class)
-    public void testExecute_badExpression() throws Exception {
+    public void testEvaluate_badExpression() throws Exception {
         final String expression = "1 + ";
-        testedObject.execute(expression);
+        testedObject.evaluate(expression);
     }
 }

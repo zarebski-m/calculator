@@ -39,6 +39,8 @@ public class CalculatorTest {
 
     private Evaluator evaluatorMock;
 
+    private Evaluator helperEvaluatorMock;
+
     private FunctionRepository functionRepositoryMock;
 
     private FunctionParser functionParserMock;
@@ -49,43 +51,45 @@ public class CalculatorTest {
     public void setUp() {
         support = new EasyMockSupport();
         evaluatorMock = support.createMock(Evaluator.class);
+        helperEvaluatorMock = support.createMock(Evaluator.class);
         functionRepositoryMock = support.createMock(FunctionRepository.class);
         functionParserMock = support.createMock(FunctionParser.class);
 
         testedObject = new Calculator();
         testedObject.setEvaluator(evaluatorMock);
+        testedObject.setHelperEvaluator(helperEvaluatorMock);
         testedObject.setFunctionRepository(functionRepositoryMock);
         testedObject.setFunctionParser(functionParserMock);
     }
 
     @Test
-    public void testExecute_noExecution() throws Exception {
+    public void testEvaluateExpression_noExecution() throws Exception {
         assertEquals(0.0, testedObject.getResult(), EPSILON);
     }
 
     @Test
-    public void testExecute_singleExecution() throws Exception {
+    public void testEvaluateExpression_singleExecution() throws Exception {
         final String expr = "expression";
         final double expected = 12.3;
 
-        expect(evaluatorMock.execute(expr)).andReturn(expected);
+        expect(evaluatorMock.evaluate(expr)).andReturn(expected);
 
         support.replayAll();
-        testedObject.execute(expr);
+        testedObject.evaluateExpression(expr);
         support.verifyAll();
 
         assertEquals(expected, testedObject.getResult(), EPSILON);
     }
 
     @Test
-    public void testExecute_executionError() throws Exception {
+    public void testEvaluateExpression_executionError() throws Exception {
         final String expr = "bad expression";
 
-        expect(evaluatorMock.execute(expr)).andThrow(new ExpressionExecuteException(expr, null));
+        expect(evaluatorMock.evaluate(expr)).andThrow(new ExpressionExecuteException(expr, null));
 
         try {
             support.replayAll();
-            testedObject.execute(expr);
+            testedObject.evaluateExpression(expr);
             support.verifyAll();
         } catch (ExpressionExecuteException ex) {
             return;
@@ -96,5 +100,9 @@ public class CalculatorTest {
         }
 
         fail();
+    }
+
+    @Test
+    public void testAddFunction_success() throws Exception {
     }
 }

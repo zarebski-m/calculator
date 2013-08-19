@@ -41,7 +41,7 @@ import com.google.common.annotations.VisibleForTesting;
 public class Calculator {
     private Evaluator evaluator;
 
-    private Evaluator singleEvaluator;
+    private Evaluator helperEvaluator;
 
     private FunctionRepository functionRepository;
 
@@ -50,15 +50,15 @@ public class Calculator {
     public Calculator() {
         functionRepository = new RPNFunctionRepository();
         evaluator = new RPNEvaluator(functionRepository);
-        singleEvaluator = new RPNEvaluator(functionRepository);
-        functionParser = new SimpleFunctionParser(singleEvaluator);
+        helperEvaluator = new RPNEvaluator(functionRepository);
+        functionParser = new SimpleFunctionParser(helperEvaluator);
     }
 
     private double actualResult = 0.0;
 
-    public void execute(final String command) throws ExpressionExecuteException {
+    public void evaluateExpression(final String command) throws ExpressionExecuteException {
         try {
-            actualResult = evaluator.execute(command);
+            actualResult = evaluator.evaluate(command);
         } catch (ExpressionExecuteException ex) {
             actualResult = Double.NaN;
             throw ex;
@@ -101,6 +101,11 @@ public class Calculator {
     @VisibleForTesting
     void setEvaluator(final Evaluator evaluator) {
         this.evaluator = evaluator;
+    }
+
+    @VisibleForTesting
+    void setHelperEvaluator(final Evaluator helperEvaluator) {
+        this.helperEvaluator = helperEvaluator;
     }
 
     @VisibleForTesting

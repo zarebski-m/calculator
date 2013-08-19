@@ -50,7 +50,7 @@ public class RPNEvaluator implements Evaluator {
     }
 
     @Override
-    public double execute(final String expression) throws ExpressionExecuteException {
+    public double evaluate(final String expression) throws ExpressionExecuteException {
         values.clear();
         functions.clear();
 

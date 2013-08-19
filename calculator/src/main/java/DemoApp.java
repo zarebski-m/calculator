@@ -71,7 +71,7 @@ public final class DemoApp implements Runnable {
                 if (isCommand(line)) {
                     calc.executeCommand(new Command.Builder().parse(line).build());
                 } else {
-                    calc.execute(line);
+                    calc.evaluateExpression(line);
                     writeResult(calc.getResult());
                 }
             } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException ex) {

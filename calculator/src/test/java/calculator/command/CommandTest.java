@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.evaluator;
+package calculator.command;
 
-import calculator.exception.execute.ExpressionExecuteException;
+import org.junit.Test;
 
-public interface Evaluator {
-    double evaluate(final String expression) throws ExpressionExecuteException;
+public class CommandTest {
+    @Test
+    public void testBuild() {
+    }
 }
