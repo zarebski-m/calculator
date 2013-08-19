@@ -23,6 +23,8 @@
  */
 
 import calculator.Calculator;
+import calculator.command.Command;
+import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.parse.FunctionParseException;
 import java.io.BufferedReader;
@@ -35,39 +37,47 @@ public final class DemoApp implements Runnable {
     }
 
     public static void main(final String[] args) throws IOException {
-        final Calculator calc = new Calculator();
+        DemoApp application = new DemoApp();
+        application.run();
+    }
+
+    private String readExpression(final BufferedReader reader) {
         try {
-            calc.addFunction("square", "{0} * {0}");
-            calc.addConstant("TWO", "1 + 1");
-        } catch (FunctionParseException ex) {
+            System.out.print("> ");
+            return reader.readLine();
+        } catch (IOException ex) {
             ex.printStackTrace();
+            return "";
         }
+    }
+
+    private void writeResult(double result) {
+        System.out.println(result);
+    }
+
+    private boolean isCommand(final String line) {
+        return line.startsWith(":");
+    }
+
+    @Override
+    public void run() {
+        final Calculator calc = new Calculator();
 
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
         String line = readExpression(reader);
 
         while (!"exit".equalsIgnoreCase(line)) {
             try {
-                calc.execute(line);
-                writeResult(calc.getResult());
-            } catch (ExpressionExecuteException ex) {
+                if (isCommand(line)) {
+                    calc.executeCommand(new Command.Builder().parse(line).build());
+                } else {
+                    calc.execute(line);
+                    writeResult(calc.getResult());
+                }
+            } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException ex) {
                 ex.printStackTrace();
             }
             line = readExpression(reader);
         }
-    }
-
-    private static String readExpression(final BufferedReader reader) throws IOException {
-        System.out.print("> ");
-        return reader.readLine();
-    }
-
-    private static void writeResult(double result) {
-        System.out.println(result);
-    }
-
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

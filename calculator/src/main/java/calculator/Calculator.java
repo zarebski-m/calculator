@@ -23,8 +23,10 @@
  */
 package calculator;
 
+import calculator.command.Command;
 import calculator.evaluator.Evaluator;
 import calculator.evaluator.rpn.RPNEvaluator;
+import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.parse.FunctionParseException;
 import calculator.function.FunctionRepository;
@@ -75,6 +77,25 @@ public class Calculator {
     public void addConstant(final String name, final String expression) throws FunctionParseException {
         final FunctionExecutor executor = functionParser.parse(expression);
         functionRepository.add(name, new CustomConstant(executor));
+    }
+
+    public void executeCommand(final Command command) throws FunctionParseException, UnknownCommandException {
+        switch (command.getType()) {
+            case Clear:
+                actualResult = 0.0;
+                break;
+            case Recall:
+                System.out.println(actualResult);
+                break;
+            case DefineFunction:
+                addFunction(command.getParam(), command.getContent());
+                break;
+            case DefineConstant:
+                addConstant(command.getParam(), command.getContent());
+                break;
+            default:
+                throw new UnknownCommandException(command.toString());
+        }
     }
 
     @VisibleForTesting
