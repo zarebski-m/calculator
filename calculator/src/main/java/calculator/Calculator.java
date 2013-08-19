@@ -39,6 +39,8 @@ import com.google.common.annotations.VisibleForTesting;
 public class Calculator {
     private Evaluator evaluator;
 
+    private Evaluator singleEvaluator;
+
     private FunctionRepository functionRepository;
 
     private FunctionParser functionParser;
@@ -46,7 +48,8 @@ public class Calculator {
     public Calculator() {
         functionRepository = new RPNFunctionRepository();
         evaluator = new RPNEvaluator(functionRepository);
-        functionParser = new SimpleFunctionParser(evaluator);
+        singleEvaluator = new RPNEvaluator(functionRepository);
+        functionParser = new SimpleFunctionParser(singleEvaluator);
     }
 
     private double actualResult = 0.0;
