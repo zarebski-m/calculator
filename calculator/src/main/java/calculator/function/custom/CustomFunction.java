@@ -28,9 +28,9 @@ import calculator.function.AbstractFunction;
 import java.util.Stack;
 
 public class CustomFunction extends AbstractFunction {
-    private final CustomFunctionExecutor executor;
+    private final FunctionExecutor executor;
 
-    public CustomFunction(final CustomFunctionExecutor executor) {
+    public CustomFunction(final FunctionExecutor executor) {
         super();
         this.executor = executor;
     }

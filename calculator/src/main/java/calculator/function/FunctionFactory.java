@@ -23,12 +23,17 @@
  */
 package calculator.function;
 
-import calculator.function.builtin.BuiltinFunction;
-import calculator.function.builtin.BuiltinConstant;
-import calculator.function.builtin.BinaryOperatorFunction;
 import calculator.exception.FunctionAlreadyExistsException;
 import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.FunctionParseException;
 import calculator.exception.WrongFunctionNameException;
+import calculator.function.builtin.BinaryOperatorFunction;
+import calculator.function.builtin.BuiltinConstant;
+import calculator.function.builtin.BuiltinFunction;
+import calculator.function.custom.CustomConstant;
+import calculator.function.custom.CustomFunction;
+import calculator.function.custom.FunctionExecutor;
+import calculator.function.custom.FunctionParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -38,16 +43,26 @@ public class FunctionFactory {
 
     private final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
 
-    public FunctionFactory() {
-        // operators
+    private final FunctionParser functionParser;
+
+    public FunctionFactory(final FunctionParser functionParser) {
+        this.functionParser = functionParser;
+
+        initOperators();
+        initFunctions();
+        initConstants();
+    }
+
+    private void initOperators() {
         functions.put("+", new BinaryOperatorFunction.Add());
         functions.put("-", new BinaryOperatorFunction.Substract());
         functions.put("*", new BinaryOperatorFunction.Multiply());
         functions.put("/", new BinaryOperatorFunction.Divide());
         functions.put("%", new BinaryOperatorFunction.Modulo());
         functions.put("^", new BinaryOperatorFunction.Power());
+    }
 
-        // builtin functions
+    private void initFunctions() {
         functions.put("sin", new BuiltinFunction.Sinus());
         functions.put("cos", new BuiltinFunction.Cosinus());
         functions.put("tan", new BuiltinFunction.Tangent());
@@ -66,8 +81,9 @@ public class FunctionFactory {
         functions.put("sqrt", new BuiltinFunction.SquareRoot());
         functions.put("d2r", new BuiltinFunction.DegreesToRadians());
         functions.put("r2d", new BuiltinFunction.RadiansToDegrees());
+    }
 
-        // builtin constants
+    private void initConstants() {
         functions.put("PI", new BuiltinConstant.Pi());
         functions.put("E", new BuiltinConstant.E());
     }
@@ -80,14 +96,26 @@ public class FunctionFactory {
         return function;
     }
 
-    public void registerFunction(final String name, final Function function) throws FunctionAlreadyExistsException,
-                                                                                    WrongFunctionNameException {
+    public void registerFunction(final String name, final String functionBody) throws
+            FunctionAlreadyExistsException, WrongFunctionNameException, FunctionParseException {
+        FunctionExecutor executor = prepareFunction(name, functionBody);
+        functions.put(name, new CustomFunction(executor));
+    }
+
+    public void registerConstant(final String name, final String value) throws
+            WrongFunctionNameException, FunctionAlreadyExistsException, FunctionParseException {
+        FunctionExecutor executor = prepareFunction(name, value);
+        functions.put(name, new CustomConstant(executor));
+    }
+
+    private FunctionExecutor prepareFunction(final String name, final String functionBody) throws
+            WrongFunctionNameException, FunctionAlreadyExistsException, FunctionParseException {
         if (!namePattern.matcher(name).matches()) {
             throw new WrongFunctionNameException(name);
         }
         if (functions.containsKey(name)) {
             throw new FunctionAlreadyExistsException(name);
         }
-        functions.put(name, function);
+        return functionParser.parse(functionBody);
     }
 }

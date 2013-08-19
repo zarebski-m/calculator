@@ -31,8 +31,10 @@ import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionFactory;
 import calculator.function.builtin.TerminalFunction;
-import calculator.parser.ExpressionTokenizerImpl;
+import calculator.function.custom.FunctionParser;
+import calculator.function.custom.FunctionParserImpl;
 import calculator.parser.ExpressionTokenizer;
+import calculator.parser.ExpressionTokenizerImpl;
 import calculator.parser.token.FunctionToken;
 import calculator.parser.token.NumberToken;
 import calculator.parser.token.Token;
@@ -48,8 +50,11 @@ public class Calculator {
 
     private final FunctionFactory functionFactory;
 
+    private final FunctionParser functionParser;
+
     public Calculator() {
-        this.functionFactory = new FunctionFactory();
+        this.functionParser = new FunctionParserImpl();
+        this.functionFactory = new FunctionFactory(functionParser);
         this.tokenFactory = new TokenFactory(functionFactory);
     }
 
@@ -99,7 +104,7 @@ public class Calculator {
     }
 
     private void handleFunction(final Token<?> token) throws ExpressionExecuteException,
-                                                             NotEnoughParametersException {
+            NotEnoughParametersException {
         final FunctionToken functionToken = (FunctionToken)token;
         while (!functions.isEmpty() && shouldExecute(functions.peek(), functionToken.getValue())) {
             final Function function = functions.pop();

@@ -26,6 +26,6 @@ package calculator.function.custom;
 import calculator.exception.NotEnoughParametersException;
 import java.util.Stack;
 
-public interface CustomFunctionExecutor {
+public interface FunctionExecutor {
     void execute(final Stack<Double> stack) throws NotEnoughParametersException;
 }

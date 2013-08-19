@@ -23,20 +23,11 @@
  */
 package calculator.function.custom;
 
-import calculator.exception.NotEnoughParametersException;
-import calculator.function.AbstractConstant;
-import java.util.Stack;
+import calculator.exception.FunctionParseException;
 
-public class CustomConstant extends AbstractConstant {
-    private final FunctionExecutor executor;
-
-    public CustomConstant(final FunctionExecutor executor) {
-        super();
-        this.executor = executor;
-    }
-
+public class FunctionParserImpl implements FunctionParser {
     @Override
-    public void apply(Stack<Double> stack) throws NotEnoughParametersException {
-        executor.execute(stack);
+    public FunctionExecutor parse(String body) throws FunctionParseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

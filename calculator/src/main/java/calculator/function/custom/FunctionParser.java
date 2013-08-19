@@ -23,8 +23,8 @@
  */
 package calculator.function.custom;
 
-public class CustomFunctionParser {
-    public CustomFunctionExecutor getExecutor() {
-        return null;
-    }
+import calculator.exception.FunctionParseException;
+
+public interface FunctionParser {
+    public FunctionExecutor parse(final String body) throws FunctionParseException;
 }

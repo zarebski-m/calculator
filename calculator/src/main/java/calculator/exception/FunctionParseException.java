@@ -21,22 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function.custom;
+package calculator.exception;
 
-import calculator.exception.NotEnoughParametersException;
-import calculator.function.AbstractConstant;
-import java.util.Stack;
-
-public class CustomConstant extends AbstractConstant {
-    private final FunctionExecutor executor;
-
-    public CustomConstant(final FunctionExecutor executor) {
-        super();
-        this.executor = executor;
-    }
-
-    @Override
-    public void apply(Stack<Double> stack) throws NotEnoughParametersException {
-        executor.execute(stack);
+public class FunctionParseException extends Exception {
+    public FunctionParseException(final String message) {
+        super(message);
     }
 }

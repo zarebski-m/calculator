@@ -23,22 +23,40 @@
  */
 package calculator.function;
 
-import calculator.function.builtin.BuiltinFunction;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import calculator.exception.FunctionAlreadyExistsException;
 import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.NotEnoughParametersException;
 import calculator.exception.WrongFunctionNameException;
+import calculator.function.custom.CustomFunction;
+import calculator.function.custom.FunctionExecutor;
+import calculator.function.custom.FunctionParser;
+import java.util.Stack;
+import org.easymock.EasyMock;
+import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 
 public class FunctionFactoryTest {
+    private class FunctionExecutorStub implements FunctionExecutor {
+        @Override
+        public void execute(Stack<Double> stack) throws NotEnoughParametersException {
+        }
+    }
+
     private FunctionFactory factory;
+
+    private FunctionParser functionParserMock;
+
+    private EasyMockSupport support;
 
     @Before
     public void setUp() {
-        factory = new FunctionFactory();
+        support = new EasyMockSupport();
+        functionParserMock = support.createMock(FunctionParser.class);
+        factory = new FunctionFactory(functionParserMock);
     }
 
     @Test
@@ -71,9 +89,16 @@ public class FunctionFactoryTest {
     @Test
     public void testRegisterFunction_success() throws Exception {
         final String name = "sin_new";
-        factory.registerFunction(name, new BuiltinFunction.Sinus());
+        final String body = "sin_new";
+
+        EasyMock.expect(functionParserMock.parse(body)).andReturn(new FunctionExecutorStub());
+
+        support.replayAll();
+        factory.registerFunction(name, body);
+        support.verifyAll();
+
         final Function function = factory.getFunction(name);
-        assertTrue(function instanceof BuiltinFunction.Sinus);
+        assertTrue(function instanceof CustomFunction);
     }
 
     @Test(expected = FunctionAlreadyExistsException.class)
