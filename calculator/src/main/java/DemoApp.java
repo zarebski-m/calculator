@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator;
 
+import calculator.Calculator;
 import calculator.exception.ExpressionExecuteException;
 import java.io.BufferedReader;
 import java.io.IOException;

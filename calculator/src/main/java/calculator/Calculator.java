@@ -30,13 +30,14 @@ import calculator.function.FunctionRepository;
 import calculator.function.rpn.RPNFunctionRepository;
 import calculator.parser.FunctionParser;
 import calculator.parser.SimpleFunctionParser;
+import com.google.common.annotations.VisibleForTesting;
 
 public class Calculator {
-    private final Evaluator evaluator;
+    private Evaluator evaluator;
 
-    private final FunctionRepository functionRepository;
+    private FunctionRepository functionRepository;
 
-    private final FunctionParser functionParser;
+    private FunctionParser functionParser;
 
     public Calculator() {
         functionRepository = new RPNFunctionRepository();
@@ -44,7 +45,7 @@ public class Calculator {
         functionParser = new SimpleFunctionParser(evaluator);
     }
 
-    private double actualResult = Double.NaN;
+    private double actualResult = 0.0;
 
     public void execute(final String command) throws ExpressionExecuteException {
         try {
@@ -57,5 +58,20 @@ public class Calculator {
 
     public double getResult() {
         return actualResult;
+    }
+
+    @VisibleForTesting
+    void setEvaluator(final Evaluator evaluator) {
+        this.evaluator = evaluator;
+    }
+
+    @VisibleForTesting
+    void setFunctionRepository(final FunctionRepository repository) {
+        this.functionRepository = repository;
+    }
+
+    @VisibleForTesting
+    void setFunctionParser(final FunctionParser parser) {
+        this.functionParser = parser;
     }
 }
