@@ -21,29 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.command;
+package calculator.exception.command;
 
-import static org.junit.Assert.assertEquals;
-
-import calculator.exception.command.CommandParseException;
-import org.junit.Test;
-
-public class CommandTest {
-    @Test
-    public void testBuild_parseSuccess() throws Exception {
-        final String line = ":func param body";
-
-        final Command cmd = new Command.Builder().parse(line).build();
-
-        assertEquals(Command.CommandType.DefineFunction, cmd.getType());
-        assertEquals("param", cmd.getParam());
-        assertEquals("body", cmd.getContent());
-    }
-
-    @Test(expected = CommandParseException.class)
-    public void testBuild_parseFailure() throws Exception {
-        final String line = "not_a_command";
-
-        new Command.Builder().parse(line).build();
+public class CommandParseException extends Exception {
+    public CommandParseException(final String message) {
+        super(message);
     }
 }

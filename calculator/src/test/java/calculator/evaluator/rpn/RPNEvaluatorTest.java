@@ -112,6 +112,13 @@ public class RPNEvaluatorTest {
     }
 
     @Test
+    public void testEvaluate_functionChainNoNrackets() throws Exception {
+        final String expression = "exp sin PI";
+        final double actual = testedObject.evaluate(expression);
+        assertEquals(1.0, actual, EPSILON);
+    }
+
+    @Test
     public void testEvaluate_complexExpression() throws Exception {
         final String expression = "1+atan2(2+2*2-2+2, log(exp(PI % E)))";
         final double actual = testedObject.evaluate(expression);

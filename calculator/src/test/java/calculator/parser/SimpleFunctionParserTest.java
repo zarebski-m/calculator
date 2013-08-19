@@ -21,29 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.command;
+package calculator.parser;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import calculator.exception.command.CommandParseException;
+import calculator.evaluator.Evaluator;
+import calculator.function.rpn.custom.FunctionExecutor;
+import java.util.Stack;
+import org.easymock.EasyMock;
+import org.easymock.EasyMockSupport;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CommandTest {
-    @Test
-    public void testBuild_parseSuccess() throws Exception {
-        final String line = ":func param body";
+public class SimpleFunctionParserTest {
+    private EasyMockSupport support;
 
-        final Command cmd = new Command.Builder().parse(line).build();
+    private Evaluator evaluatorMock;
 
-        assertEquals(Command.CommandType.DefineFunction, cmd.getType());
-        assertEquals("param", cmd.getParam());
-        assertEquals("body", cmd.getContent());
+    private FunctionParser testedObject;
+
+    @Before
+    public void setUp() {
+        support = new EasyMockSupport();
+        evaluatorMock = support.createMock(Evaluator.class);
+        testedObject = new SimpleFunctionParser(evaluatorMock);
     }
 
-    @Test(expected = CommandParseException.class)
-    public void testBuild_parseFailure() throws Exception {
-        final String line = "not_a_command";
+    @Test
+    public void testParse() throws Exception {
+        final Stack<Double> stack = new Stack<>();
+        stack.push(13.0);
+        stack.push(17.0);
 
-        new Command.Builder().parse(line).build();
+        final String body = "sin({0})^2 + cos({1})^3";
+        final String processed = "sin(13.0)^2 + cos(17.0)^3";
+
+        EasyMock.expect(evaluatorMock.evaluate(processed)).andStubReturn(Double.NaN);
+
+        support.replayAll();
+        FunctionExecutor executor = testedObject.parse(body);
+        executor.execute(stack);
+        support.verifyAll();
+
+        assertEquals(2, executor.getNumberOfParams());
     }
 }

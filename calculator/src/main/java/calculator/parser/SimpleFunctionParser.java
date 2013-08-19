@@ -28,7 +28,6 @@ import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.execute.NotEnoughParametersException;
 import calculator.exception.parse.FunctionParseException;
 import calculator.function.rpn.custom.FunctionExecutor;
-import com.google.common.annotations.VisibleForTesting;
 import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -43,7 +42,7 @@ public class SimpleFunctionParser implements FunctionParser {
         this.evaluator = evaluator;
     }
 
-    private class SimpleFunctionExecutor implements FunctionExecutor {
+    class SimpleFunctionExecutor implements FunctionExecutor {
         private final int numberOfParams;
 
         private final String functionBody;
@@ -109,10 +108,5 @@ public class SimpleFunctionParser implements FunctionParser {
             }
         }
         return maxParam + 1;
-    }
-
-    @VisibleForTesting
-    void setEvaluator(final Evaluator evaluator) {
-        this.evaluator = evaluator;
     }
 }

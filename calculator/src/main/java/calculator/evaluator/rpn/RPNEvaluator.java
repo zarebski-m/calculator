@@ -137,16 +137,4 @@ public class RPNEvaluator implements Evaluator {
             function.apply(values);
         }
     }
-
-    public void clear() {
-        values.clear();
-        functions.clear();
-    }
-
-    public double getResult() {
-        if (values.isEmpty()) {
-            return Double.NaN;
-        }
-        return values.peek();
-    }
 }

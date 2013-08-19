@@ -24,6 +24,7 @@
 
 import calculator.Calculator;
 import calculator.command.Command;
+import calculator.exception.command.CommandParseException;
 import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.parse.FunctionParseException;
@@ -74,7 +75,8 @@ public final class DemoApp implements Runnable {
                     calc.evaluateExpression(line);
                     writeResult(calc.getResult());
                 }
-            } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException ex) {
+            } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException |
+                    CommandParseException ex) {
                 ex.printStackTrace();
             }
             line = readExpression(reader);

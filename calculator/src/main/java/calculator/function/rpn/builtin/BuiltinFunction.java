@@ -48,7 +48,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.cos(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("cos", e);
             }
         }
     }
@@ -60,7 +60,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.tan(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("tan", e);
             }
         }
     }
@@ -72,7 +72,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.asin(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("asin", e);
             }
         }
     }
@@ -84,7 +84,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.acos(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("acos", e);
             }
         }
     }
@@ -96,7 +96,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.atan(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("atan", e);
             }
         }
     }
@@ -109,7 +109,7 @@ public final class BuiltinFunction {
                 final double val1 = stack.pop();
                 stack.push(Math.atan2(val1, val2));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("atan2", e);
             }
         }
     }
@@ -121,7 +121,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.sinh(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("sinh", e);
             }
         }
     }
@@ -133,7 +133,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.cosh(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("cosh", e);
             }
         }
     }
@@ -145,7 +145,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.tanh(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("tanh", e);
             }
         }
     }
@@ -157,7 +157,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.abs(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("abs", e);
             }
         }
     }
@@ -169,7 +169,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.log(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("log", e);
             }
         }
     }
@@ -181,7 +181,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.exp(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("exp", e);
             }
         }
     }
@@ -193,7 +193,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.signum(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("sgn", e);
             }
         }
     }
@@ -205,7 +205,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.sqrt(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("sqrt", e);
             }
         }
     }
@@ -217,7 +217,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.toRadians(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("d2r", e);
             }
         }
     }
@@ -229,7 +229,7 @@ public final class BuiltinFunction {
                 final double val = stack.pop();
                 stack.push(Math.toDegrees(val));
             } catch (EmptyStackException e) {
-                throw new NotEnoughParametersException("sin", e);
+                throw new NotEnoughParametersException("r2d", e);
             }
         }
     }

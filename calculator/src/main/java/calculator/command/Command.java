@@ -23,6 +23,7 @@
  */
 package calculator.command;
 
+import calculator.exception.command.CommandParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,12 +114,14 @@ public class Command {
             return this;
         }
 
-        public Builder parse(final String line) {
+        public Builder parse(final String line) throws CommandParseException {
             Matcher matcher = commandPattern.matcher(line);
             if (matcher.matches()) {
                 this.type = CommandType.getCommandType(matcher.group(INDEX_NAME));
                 this.param = matcher.group(INDEX_PARAM);
                 this.content = matcher.group(INDEX_CONTENT);
+            } else {
+                throw new CommandParseException(line);
             }
             return this;
         }
