@@ -21,15 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.rpn.builtin;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.function.rpn.AbstractConstant;
+import java.util.Stack;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+public abstract class BuiltinConstant {
+    public static final class Pi extends AbstractConstant {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.PI);
+        }
+    }
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    public static final class E extends AbstractConstant {
+        @Override
+        public void apply(final Stack<Double> stack) {
+            stack.push(Math.E);
+        }
+    }
 }

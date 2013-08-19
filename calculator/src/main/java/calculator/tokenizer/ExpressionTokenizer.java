@@ -21,15 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.tokenizer;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+public interface ExpressionTokenizer {
+    boolean hasNextToken();
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
-
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    String getNextToken();
 }

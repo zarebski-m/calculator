@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-public final class DemoApp {
-    private DemoApp() {
+public final class DemoApp implements Runnable {
+    public DemoApp() {
     }
 
     public static void main(final String[] args) throws IOException {
@@ -43,7 +43,6 @@ public final class DemoApp {
             try {
                 calc.execute(line);
                 writeResult(calc.getResult());
-                calc.clear();
             } catch (ExpressionExecuteException ex) {
                 ex.printStackTrace();
             }
@@ -58,5 +57,10 @@ public final class DemoApp {
 
     private static void writeResult(double result) {
         System.out.println(result);
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

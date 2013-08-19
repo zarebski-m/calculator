@@ -21,15 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.evaluator.rpn.token;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.function.Function;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+public class FunctionToken extends Token<Function> {
+    private final Function function;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    public FunctionToken(final String rawValue, final Function function) {
+        super(rawValue);
+        this.function = function;
+    }
+
+    @Override
+    public final TokenType getTokenType() {
+        return TokenType.Function;
+    }
+
+    @Override
+    public final Function getValue() {
+        return function;
+    }
 }

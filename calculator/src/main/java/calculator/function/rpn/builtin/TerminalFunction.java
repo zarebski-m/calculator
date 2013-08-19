@@ -21,15 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.rpn.builtin;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.function.Function;
+import java.util.Stack;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+public final class TerminalFunction implements Function {
+    public static final int PRIORITY_TERMINAL = -1;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    @Override
+    public int getPriority() {
+        return PRIORITY_TERMINAL;
+    }
+
+    @Override
+    public Associativity getAssociativity() {
+        return Associativity.Right;
+    }
+
+    @Override
+    public void apply(final Stack<Double> stack) {
+        // nothing to do
+    }
 }

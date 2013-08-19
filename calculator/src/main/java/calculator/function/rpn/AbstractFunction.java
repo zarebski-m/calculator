@@ -21,15 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.rpn;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.function.Function;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+/**
+ * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
+ */
+public abstract class AbstractFunction implements Function {
+    private static final int PRIORITY_FUNCTION = 10;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    @Override
+    public final int getPriority() {
+        return PRIORITY_FUNCTION;
+    }
+
+    @Override
+    public final Associativity getAssociativity() {
+        return Associativity.Right;
+    }
 }

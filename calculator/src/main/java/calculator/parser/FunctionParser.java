@@ -21,15 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.parser;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.exception.FunctionParseException;
+import calculator.function.rpn.custom.FunctionExecutor;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
-
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+public interface FunctionParser {
+    public FunctionExecutor parse(final String body) throws FunctionParseException;
 }

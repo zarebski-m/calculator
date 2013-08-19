@@ -21,15 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.evaluator.rpn.token;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+public abstract class BracketToken extends Token<Void> {
+    public BracketToken(final String rawValue) {
+        super(rawValue);
+    }
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+    @Override
+    public final Void getValue() {
+        return null;
+    }
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    public static class Open extends BracketToken {
+        public Open(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.OpenBracket;
+        }
+    }
+
+    public static class Closed extends BracketToken {
+        public Closed(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.ClosedBracket;
+        }
+    }
+
+    public static class Comma extends BracketToken {
+        public Comma(final String rawValue) {
+            super(rawValue);
+        }
+
+        @Override
+        public final TokenType getTokenType() {
+            return TokenType.Comma;
+        }
+    }
 }

@@ -21,15 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.parser;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.evaluator.Evaluator;
+import calculator.exception.FunctionParseException;
+import calculator.exception.NotEnoughParametersException;
+import calculator.function.rpn.custom.FunctionExecutor;
+import java.util.Stack;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+public class SimpleFunctionParser implements FunctionParser {
+    private final Evaluator evaluator;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    public SimpleFunctionParser(final Evaluator evaluator) {
+        this.evaluator = evaluator;
+    }
+
+    private class SimpleFunctionExecutor implements FunctionExecutor {
+        @Override
+        public void execute(Stack<Double> stack) throws NotEnoughParametersException {
+            throw new UnsupportedOperationException("Not implemented yet.");
+        }
+    }
+
+    @Override
+    public FunctionExecutor parse(String body) throws FunctionParseException {
+        return new SimpleFunctionExecutor();
+    }
 }

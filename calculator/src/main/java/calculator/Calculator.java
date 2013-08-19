@@ -23,134 +23,39 @@
  */
 package calculator;
 
-import static calculator.parser.token.Token.TokenType.Number;
-
+import calculator.evaluator.Evaluator;
+import calculator.evaluator.rpn.RPNEvaluator;
 import calculator.exception.ExpressionExecuteException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.NotEnoughParametersException;
-import calculator.function.Function;
 import calculator.function.FunctionRepository;
-import calculator.function.builtin.TerminalFunction;
-import calculator.function.parser.FunctionParser;
-import calculator.function.parser.FunctionParserImpl;
-import calculator.parser.ExpressionTokenizer;
-import calculator.parser.ExpressionTokenizerImpl;
-import calculator.parser.token.FunctionToken;
-import calculator.parser.token.NumberToken;
-import calculator.parser.token.Token;
-import calculator.parser.token.TokenFactory;
-import java.util.Stack;
+import calculator.function.rpn.RPNFunctionRepository;
+import calculator.parser.FunctionParser;
+import calculator.parser.SimpleFunctionParser;
 
 public class Calculator {
-    private final Stack<Double> values = new Stack<>();
+    private final Evaluator evaluator;
 
-    private final Stack<Function> functions = new Stack<>();
-
-    private final TokenFactory tokenFactory;
-
-    private final FunctionRepository functionFactory;
+    private final FunctionRepository functionRepository;
 
     private final FunctionParser functionParser;
 
     public Calculator() {
-        this.functionParser = new FunctionParserImpl();
-        this.functionFactory = new FunctionRepository(functionParser);
-        this.tokenFactory = new TokenFactory(functionFactory);
+        functionRepository = new RPNFunctionRepository();
+        evaluator = new RPNEvaluator(functionRepository);
+        functionParser = new SimpleFunctionParser(evaluator);
     }
 
-    public void execute(final String expression) throws ExpressionExecuteException {
-        ExpressionTokenizer tokenizer = new ExpressionTokenizerImpl(expression);
+    private double actualResult = Double.NaN;
+
+    public void execute(final String command) throws ExpressionExecuteException {
         try {
-            while (tokenizer.hasNextToken()) {
-                String tokenString = tokenizer.getNextToken();
-                final Token<?> token = tokenFactory.getToken(tokenString);
-                handleToken(token);
-            }
-
-            while (!functions.isEmpty()) {
-                final Function function = functions.pop();
-                function.apply(values);
-            }
-        } catch (FunctionNotDefinedException | NotEnoughParametersException ex) {
-            throw new ExpressionExecuteException(expression, ex);
+            actualResult = evaluator.execute(command);
+        } catch (ExpressionExecuteException ex) {
+            actualResult = Double.NaN;
+            throw ex;
         }
-    }
-
-    private void handleToken(final Token<?> token) throws ExpressionExecuteException, NotEnoughParametersException {
-        switch (token.getTokenType()) {
-            case Number:
-                handleNumber(token);
-                break;
-            case Function:
-                handleFunction(token);
-                break;
-            case OpenBracket:
-                handleOpenBracket();
-                break;
-            case ClosedBracket:
-                handleClosedBracket();
-                break;
-            case Comma:
-                handleComma();
-                break;
-            default:
-                throw new UnsupportedOperationException(token.getRawValue());
-        }
-    }
-
-    private void handleNumber(final Token<?> token) {
-        final NumberToken numberToken = (NumberToken)token;
-        values.push(numberToken.getValue());
-    }
-
-    private void handleFunction(final Token<?> token) throws ExpressionExecuteException,
-            NotEnoughParametersException {
-        final FunctionToken functionToken = (FunctionToken)token;
-        while (!functions.isEmpty() && shouldExecute(functions.peek(), functionToken.getValue())) {
-            final Function function = functions.pop();
-            function.apply(values);
-        }
-        functions.push(functionToken.getValue());
-    }
-
-    private boolean shouldExecute(final Function existingFunction, final Function newFunction) {
-        if (existingFunction.getPriority() > newFunction.getPriority()) {
-            return true;
-        }
-        if (existingFunction.getPriority() == newFunction.getPriority() &&
-                existingFunction.getAssociativity() == Function.Associativity.Left) {
-            return true;
-        }
-        return false;
-    }
-
-    private void handleOpenBracket() {
-        functions.push(new TerminalFunction());
-    }
-
-    private void handleClosedBracket() throws ExpressionExecuteException, NotEnoughParametersException {
-        handleComma();
-        if (!functions.isEmpty()) {
-            functions.pop();
-        }
-    }
-
-    private void handleComma() throws ExpressionExecuteException, NotEnoughParametersException {
-        while (!functions.isEmpty() && functions.peek().getPriority() > TerminalFunction.PRIORITY_TERMINAL) {
-            final Function function = functions.pop();
-            function.apply(values);
-        }
-    }
-
-    public void clear() {
-        values.clear();
-        functions.clear();
     }
 
     public double getResult() {
-        if (values.isEmpty()) {
-            return Double.NaN;
-        }
-        return values.peek();
+        return actualResult;
     }
 }

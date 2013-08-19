@@ -21,15 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.function.rpn.custom;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.exception.NotEnoughParametersException;
+import calculator.function.rpn.AbstractFunction;
+import java.util.Stack;
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+public class CustomFunction extends AbstractFunction {
+    private final FunctionExecutor executor;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    public CustomFunction(final FunctionExecutor executor) {
+        super();
+        this.executor = executor;
+    }
+
+    @Override
+    public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+        executor.execute(stack);
+    }
 }

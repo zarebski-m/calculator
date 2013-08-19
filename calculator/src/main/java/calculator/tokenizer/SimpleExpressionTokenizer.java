@@ -21,15 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function;
+package calculator.tokenizer;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+public class SimpleExpressionTokenizer implements ExpressionTokenizer {
+    /**
+     * Used to split without skipping delimiters. For example:
+     * <code>"foo*bar".split(WITH_DELIMITER.format("[*]"))</code> becomes:
+     * <code>"foo", "*", "bar"</code>
+     */
+    private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
-public interface FunctionRepository {
-    Function get(final String name) throws FunctionNotDefinedException;
+    private final String[] tokenStrings;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    private int pos = 0;
+
+    public SimpleExpressionTokenizer(final String input) {
+        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
+    }
+
+    @Override
+    public boolean hasNextToken() {
+        return pos < tokenStrings.length;
+    }
+
+    @Override
+    public String getNextToken() {
+        final String result = tokenStrings[pos++];
+        while (pos < tokenStrings.length && tokenStrings[pos].matches("\\s")) {
+            // skip white spaces
+            ++pos;
+        }
+        return result;
+    }
 }
