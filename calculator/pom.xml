@@ -27,7 +27,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>calculator.DemoApp</mainClass>
+                            <mainClass>DemoApp</mainClass>
                             <packageName>calculator</packageName>
                         </manifest>
                         <manifestEntries>
