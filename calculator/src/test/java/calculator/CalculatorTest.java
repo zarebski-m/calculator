@@ -19,14 +19,18 @@ package calculator;
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
+import calculator.command.Command;
 import calculator.evaluator.Evaluator;
+import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.parse.ConstantWithParametersException;
 import calculator.function.FunctionRepository;
+import calculator.function.rpn.custom.CustomConstant;
+import calculator.function.rpn.custom.CustomFunction;
+import calculator.function.rpn.custom.FunctionExecutor;
 import calculator.parser.FunctionParser;
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
@@ -39,8 +43,6 @@ public class CalculatorTest {
 
     private Evaluator evaluatorMock;
 
-    private Evaluator helperEvaluatorMock;
-
     private FunctionRepository functionRepositoryMock;
 
     private FunctionParser functionParserMock;
@@ -51,13 +53,11 @@ public class CalculatorTest {
     public void setUp() {
         support = new EasyMockSupport();
         evaluatorMock = support.createMock(Evaluator.class);
-        helperEvaluatorMock = support.createMock(Evaluator.class);
         functionRepositoryMock = support.createMock(FunctionRepository.class);
         functionParserMock = support.createMock(FunctionParser.class);
 
         testedObject = new Calculator();
         testedObject.setEvaluator(evaluatorMock);
-        testedObject.setHelperEvaluator(helperEvaluatorMock);
         testedObject.setFunctionRepository(functionRepositoryMock);
         testedObject.setFunctionParser(functionParserMock);
     }
@@ -103,6 +103,81 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testAddFunction_success() throws Exception {
+    public void testAddFunction() throws Exception {
+        final String name = "functionName";
+        final String body = "body";
+        final FunctionExecutor executorMock = support.createMock(FunctionExecutor.class);
+
+        expect(functionParserMock.parse(body)).andReturn(executorMock);
+        functionRepositoryMock.add(eq(name), anyObject(CustomFunction.class));
+
+        support.replayAll();
+        testedObject.addFunction(name, body);
+        support.verifyAll();
+    }
+
+    @Test
+    public void testAddConstant_success() throws Exception {
+        final String name = "constantName";
+        final String body = "body";
+        final FunctionExecutor executorMock = support.createMock(FunctionExecutor.class);
+
+        expect(functionParserMock.parse(body)).andReturn(executorMock);
+        functionRepositoryMock.add(eq(name), anyObject(CustomConstant.class));
+        expect(executorMock.getNumberOfParams()).andReturn(0);
+
+        support.replayAll();
+        testedObject.addConstant(name, body);
+        support.verifyAll();
+    }
+
+    @Test(expected = ConstantWithParametersException.class)
+    public void testAddConstant_useParams() throws Exception {
+        final String name = "constantName";
+        final String body = "body";
+        final FunctionExecutor executorMock = support.createMock(FunctionExecutor.class);
+
+        expect(functionParserMock.parse(body)).andReturn(executorMock);
+        functionRepositoryMock.add(eq(name), anyObject(CustomConstant.class));
+        expect(executorMock.getNumberOfParams()).andReturn(1);
+
+        support.replayAll();
+        testedObject.addConstant(name, body);
+        support.verifyAll();
+    }
+
+    @Test
+    public void testExecuteCommand_addFunction() throws Exception {
+        testedObject = support.createMockBuilder(Calculator.class).addMockedMethod("addFunction").addMockedMethod(
+                "addConstant").createMock();
+        Command cmd = new Command.Builder().withName("func").withParam("name").withContent("body").build();
+
+        testedObject.addFunction(cmd.getParam(), cmd.getContent());
+
+        support.replayAll();
+        testedObject.executeCommand(cmd);
+        support.verifyAll();
+    }
+
+    @Test
+    public void testExecuteCommand_addConstant() throws Exception {
+        testedObject = support.createMockBuilder(Calculator.class).addMockedMethod("addFunction").addMockedMethod(
+                "addConstant").createMock();
+        Command cmd = new Command.Builder().withName("const").withParam("name").withContent("body").build();
+
+        testedObject.addConstant(cmd.getParam(), cmd.getContent());
+
+        support.replayAll();
+        testedObject.executeCommand(cmd);
+        support.verifyAll();
+    }
+
+    @Test(expected = UnknownCommandException.class)
+    public void testExecuteCommand_unknown() throws Exception {
+        Command cmd = new Command.Builder().withName("unknown").withParam("name").withContent("body").build();
+
+        support.replayAll();
+        testedObject.executeCommand(cmd);
+        support.verifyAll();
     }
 }

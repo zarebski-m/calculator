@@ -28,8 +28,6 @@ import java.util.regex.Pattern;
 
 public class Command {
     public static enum CommandType {
-        Clear("c"),
-        Recall("r"),
         DefineFunction("func"),
         DefineConstant("const"),
         Unknown("");
@@ -85,9 +83,7 @@ public class Command {
     }
 
     public static final class Builder {
-        private static final Pattern simpleCommandPattern = Pattern.compile(":(\\w+)");
-
-        private static final Pattern fullCommandPattern = Pattern.compile(
+        private static final Pattern commandPattern = Pattern.compile(
                 ":(\\w+)\\s+([a-zA-Z][a-zA-Z0-9_]*)\\s*(.*)");
 
         private static final int INDEX_NAME = 1;
@@ -118,16 +114,11 @@ public class Command {
         }
 
         public Builder parse(final String line) {
-            Matcher matcher = fullCommandPattern.matcher(line);
+            Matcher matcher = commandPattern.matcher(line);
             if (matcher.matches()) {
                 this.type = CommandType.getCommandType(matcher.group(INDEX_NAME));
                 this.param = matcher.group(INDEX_PARAM);
                 this.content = matcher.group(INDEX_CONTENT);
-            } else {
-                matcher = simpleCommandPattern.matcher(line);
-                if (matcher.matches()) {
-                    this.type = CommandType.getCommandType(matcher.group(INDEX_NAME));
-                }
             }
             return this;
         }

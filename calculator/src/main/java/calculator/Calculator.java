@@ -81,12 +81,6 @@ public class Calculator {
 
     public void executeCommand(final Command command) throws FunctionParseException, UnknownCommandException {
         switch (command.getType()) {
-            case Clear:
-                actualResult = 0.0;
-                break;
-            case Recall:
-                System.out.println(actualResult);
-                break;
             case DefineFunction:
                 addFunction(command.getParam(), command.getContent());
                 break;
@@ -101,11 +95,6 @@ public class Calculator {
     @VisibleForTesting
     void setEvaluator(final Evaluator evaluator) {
         this.evaluator = evaluator;
-    }
-
-    @VisibleForTesting
-    void setHelperEvaluator(final Evaluator helperEvaluator) {
-        this.helperEvaluator = helperEvaluator;
     }
 
     @VisibleForTesting
