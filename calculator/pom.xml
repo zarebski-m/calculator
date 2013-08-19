@@ -4,7 +4,7 @@
 
     <groupId>calculator</groupId>
     <artifactId>Calculator</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>Calculator</name>
@@ -32,7 +32,7 @@
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>
-                            <url>${pom.url}</url>
+                            <url>${project.url}</url>
                         </manifestEntries>
                     </archive>
                 </configuration>
