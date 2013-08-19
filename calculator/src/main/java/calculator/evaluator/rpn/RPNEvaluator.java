@@ -23,16 +23,14 @@
  */
 package calculator.evaluator.rpn;
 
-import static calculator.evaluator.rpn.token.Token.TokenType.Number;
-
 import calculator.evaluator.Evaluator;
 import calculator.evaluator.rpn.token.FunctionToken;
 import calculator.evaluator.rpn.token.NumberToken;
 import calculator.evaluator.rpn.token.Token;
 import calculator.evaluator.rpn.token.TokenFactory;
-import calculator.exception.ExpressionExecuteException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.execute.FunctionNotDefinedException;
+import calculator.exception.execute.NotEnoughParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionRepository;
 import calculator.function.rpn.builtin.TerminalFunction;

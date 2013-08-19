@@ -23,7 +23,7 @@
  */
 package calculator.evaluator;
 
-import calculator.exception.ExpressionExecuteException;
+import calculator.exception.execute.ExpressionExecuteException;
 
 public interface Evaluator {
     double execute(final String expression) throws ExpressionExecuteException;

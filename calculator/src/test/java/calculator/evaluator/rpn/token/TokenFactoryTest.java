@@ -26,7 +26,7 @@ package calculator.evaluator.rpn.token;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.execute.FunctionNotDefinedException;
 import calculator.function.rpn.RPNFunctionRepository;
 import org.junit.Before;
 import org.junit.Test;

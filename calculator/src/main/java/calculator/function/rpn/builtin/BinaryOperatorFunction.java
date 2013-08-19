@@ -23,7 +23,7 @@
  */
 package calculator.function.rpn.builtin;
 
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.NotEnoughParametersException;
 import calculator.function.Function;
 import java.util.EmptyStackException;
 import java.util.Stack;

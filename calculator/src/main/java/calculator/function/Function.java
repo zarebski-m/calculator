@@ -23,7 +23,7 @@
  */
 package calculator.function;
 
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.ExpressionExecuteException;
 import java.util.Stack;
 
 public interface Function {
@@ -35,5 +35,5 @@ public interface Function {
 
     Associativity getAssociativity();
 
-    void apply(Stack<Double> stack) throws NotEnoughParametersException;
+    void apply(Stack<Double> stack) throws ExpressionExecuteException;
 }

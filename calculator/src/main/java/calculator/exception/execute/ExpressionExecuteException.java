@@ -21,13 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception;
+package calculator.exception.execute;
 
-/**
- * @author Marcin Zarebski <zarebski.m[AT]gmail.com>
- */
-public class FunctionNotDefinedException extends Exception {
-    public FunctionNotDefinedException(final String message) {
-        super(message);
+public class ExpressionExecuteException extends Exception {
+    public ExpressionExecuteException(final String message, final Exception e) {
+        super(message, e);
     }
 }

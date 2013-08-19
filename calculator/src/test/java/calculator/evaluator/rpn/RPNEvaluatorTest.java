@@ -26,7 +26,7 @@ package calculator.evaluator.rpn;
 import static org.junit.Assert.assertEquals;
 
 import calculator.evaluator.Evaluator;
-import calculator.exception.ExpressionExecuteException;
+import calculator.exception.execute.ExpressionExecuteException;
 import calculator.function.rpn.RPNFunctionRepository;
 import org.junit.Before;
 import org.junit.Test;

@@ -23,9 +23,11 @@
  */
 package calculator.function.rpn.custom;
 
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.ExpressionExecuteException;
 import java.util.Stack;
 
 public interface FunctionExecutor {
-    void execute(final Stack<Double> stack) throws NotEnoughParametersException;
+    int getNumberOfParams();
+
+    void execute(final Stack<Double> stack) throws ExpressionExecuteException;
 }

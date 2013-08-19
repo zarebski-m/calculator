@@ -23,20 +23,24 @@
  */
 package calculator.function.rpn.custom;
 
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.parse.ConstantWithParametersException;
 import calculator.function.rpn.AbstractConstant;
 import java.util.Stack;
 
 public class CustomConstant extends AbstractConstant {
     private final FunctionExecutor executor;
 
-    public CustomConstant(final FunctionExecutor executor) {
+    public CustomConstant(final FunctionExecutor executor) throws ConstantWithParametersException {
         super();
+        if (executor.getNumberOfParams() > 0) {
+            throw new ConstantWithParametersException("Constant cannot define parameters");
+        }
         this.executor = executor;
     }
 
     @Override
-    public void apply(Stack<Double> stack) throws NotEnoughParametersException {
+    public void apply(Stack<Double> stack) throws ExpressionExecuteException {
         executor.execute(stack);
     }
 }

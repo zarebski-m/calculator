@@ -23,7 +23,7 @@
  */
 package calculator.evaluator.rpn.token;
 
-import calculator.exception.FunctionNotDefinedException;
+import calculator.exception.execute.FunctionNotDefinedException;
 import calculator.function.FunctionRepository;
 
 public class TokenFactory {

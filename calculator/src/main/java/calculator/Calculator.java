@@ -25,9 +25,13 @@ package calculator;
 
 import calculator.evaluator.Evaluator;
 import calculator.evaluator.rpn.RPNEvaluator;
-import calculator.exception.ExpressionExecuteException;
+import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.parse.FunctionParseException;
 import calculator.function.FunctionRepository;
 import calculator.function.rpn.RPNFunctionRepository;
+import calculator.function.rpn.custom.CustomConstant;
+import calculator.function.rpn.custom.CustomFunction;
+import calculator.function.rpn.custom.FunctionExecutor;
 import calculator.parser.FunctionParser;
 import calculator.parser.SimpleFunctionParser;
 import com.google.common.annotations.VisibleForTesting;
@@ -58,6 +62,16 @@ public class Calculator {
 
     public double getResult() {
         return actualResult;
+    }
+
+    public void addFunction(final String name, final String functionBody) throws FunctionParseException {
+        final FunctionExecutor executor = functionParser.parse(functionBody);
+        functionRepository.add(name, new CustomFunction(executor));
+    }
+
+    public void addConstant(final String name, final String expression) throws FunctionParseException {
+        final FunctionExecutor executor = functionParser.parse(expression);
+        functionRepository.add(name, new CustomConstant(executor));
     }
 
     @VisibleForTesting

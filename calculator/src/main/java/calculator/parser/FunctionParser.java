@@ -23,9 +23,9 @@
  */
 package calculator.parser;
 
-import calculator.exception.FunctionParseException;
+import calculator.exception.parse.FunctionParseException;
 import calculator.function.rpn.custom.FunctionExecutor;
 
 public interface FunctionParser {
-    public FunctionExecutor parse(final String body) throws FunctionParseException;
+    FunctionExecutor parse(final String body) throws FunctionParseException;
 }

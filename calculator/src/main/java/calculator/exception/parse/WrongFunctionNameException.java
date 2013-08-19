@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception;
+package calculator.exception.parse;
 
-public class FunctionParseException extends Exception {
-    public FunctionParseException(final String message) {
+public class WrongFunctionNameException extends FunctionParseException {
+    public WrongFunctionNameException(final String message) {
         super(message);
     }
 }

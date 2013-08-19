@@ -23,7 +23,8 @@
  */
 
 import calculator.Calculator;
-import calculator.exception.ExpressionExecuteException;
+import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.parse.FunctionParseException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,6 +36,12 @@ public final class DemoApp implements Runnable {
 
     public static void main(final String[] args) throws IOException {
         final Calculator calc = new Calculator();
+        try {
+            calc.addFunction("square", "{0} * {0}");
+            calc.addConstant("TWO", "1 + 1");
+        } catch (FunctionParseException ex) {
+            ex.printStackTrace();
+        }
 
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
         String line = readExpression(reader);

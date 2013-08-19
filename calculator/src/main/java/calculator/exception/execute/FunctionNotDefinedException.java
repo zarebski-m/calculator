@@ -21,23 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function.rpn.custom;
+package calculator.exception.execute;
 
-import calculator.exception.execute.ExpressionExecuteException;
-import calculator.exception.execute.NotEnoughParametersException;
-import calculator.function.rpn.AbstractFunction;
-import java.util.Stack;
-
-public class CustomFunction extends AbstractFunction {
-    private final FunctionExecutor executor;
-
-    public CustomFunction(final FunctionExecutor executor) {
-        super();
-        this.executor = executor;
-    }
-
-    @Override
-    public void apply(final Stack<Double> stack) throws NotEnoughParametersException, ExpressionExecuteException {
-        executor.execute(stack);
+public class FunctionNotDefinedException extends ExpressionExecuteException {
+    public FunctionNotDefinedException(final String message) {
+        super(message, null);
     }
 }

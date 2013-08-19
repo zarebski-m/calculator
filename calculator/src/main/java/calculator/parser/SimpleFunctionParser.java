@@ -24,27 +24,95 @@
 package calculator.parser;
 
 import calculator.evaluator.Evaluator;
-import calculator.exception.FunctionParseException;
-import calculator.exception.NotEnoughParametersException;
+import calculator.exception.execute.ExpressionExecuteException;
+import calculator.exception.execute.NotEnoughParametersException;
+import calculator.exception.parse.FunctionParseException;
 import calculator.function.rpn.custom.FunctionExecutor;
+import com.google.common.annotations.VisibleForTesting;
+import java.util.EmptyStackException;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleFunctionParser implements FunctionParser {
-    private final Evaluator evaluator;
+    private Evaluator evaluator;
+
+    private static final Pattern paramPattern = Pattern.compile("\\{(\\d)\\}");
 
     public SimpleFunctionParser(final Evaluator evaluator) {
         this.evaluator = evaluator;
     }
 
     private class SimpleFunctionExecutor implements FunctionExecutor {
+        private final int numberOfParams;
+
+        private final String functionBody;
+
+        public SimpleFunctionExecutor(int numberOfParams, String expression) {
+            this.numberOfParams = numberOfParams;
+            this.functionBody = expression;
+        }
+
+        public int getNumberOfParams() {
+            return numberOfParams;
+        }
+
         @Override
-        public void execute(Stack<Double> stack) throws NotEnoughParametersException {
-            throw new UnsupportedOperationException("Not implemented yet.");
+        public void execute(final Stack<Double> stack) throws ExpressionExecuteException {
+            final double[] parameters = prepareParameters(stack);
+            final String processedExpression = processExpression(functionBody, parameters);
+            stack.push(evaluator.execute(processedExpression));
+        }
+
+        private double[] prepareParameters(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double[] parameters = new double[numberOfParams];
+
+                int paramsCounter = numberOfParams;
+                while (paramsCounter-- > 0) {
+                    parameters[paramsCounter] = stack.pop();
+                }
+                return parameters;
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException(functionBody, e);
+            }
+        }
+
+        private String processExpression(final String functionBody, final double[] parameters) {
+            String processed = functionBody;
+            for (int i = 0; i < parameters.length; ++i) {
+                processed = processed.replaceAll("\\{" + i + "\\}", String.valueOf(parameters[i]));
+            }
+            return processed;
         }
     }
 
     @Override
-    public FunctionExecutor parse(String body) throws FunctionParseException {
-        return new SimpleFunctionExecutor();
+    public FunctionExecutor parse(String functionBody) throws FunctionParseException {
+        try {
+            final int numberOfParams = countParameters(functionBody);
+            return new SimpleFunctionExecutor(numberOfParams, functionBody);
+        } catch (NumberFormatException ex) {
+            throw new FunctionParseException(functionBody, ex);
+        }
+
+    }
+
+    private int countParameters(final String functionBody) {
+        int maxParam = -1;
+        final Matcher matcher = paramPattern.matcher(functionBody);
+        while (matcher.find()) {
+            final int paramNumber;
+            paramNumber = Integer.valueOf(matcher.group(1));
+            if (paramNumber > maxParam) {
+                maxParam = paramNumber;
+            }
+        }
+        return maxParam + 1;
+    }
+
+    @VisibleForTesting
+    void setEvaluator(final Evaluator evaluator) {
+        this.evaluator = evaluator;
     }
 }

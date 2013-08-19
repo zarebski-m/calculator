@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception;
+package calculator.exception.execute;
 
-public class FunctionAlreadyExistsException extends Exception {
-    public FunctionAlreadyExistsException(String message) {
-        super(message);
+public class NotEnoughParametersException extends ExpressionExecuteException {
+    public NotEnoughParametersException(final String message, final Exception e) {
+        super(message, e);
     }
 }

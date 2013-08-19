@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import calculator.evaluator.Evaluator;
-import calculator.exception.ExpressionExecuteException;
+import calculator.exception.execute.ExpressionExecuteException;
 import calculator.function.FunctionRepository;
 import calculator.parser.FunctionParser;
 import org.easymock.EasyMockSupport;

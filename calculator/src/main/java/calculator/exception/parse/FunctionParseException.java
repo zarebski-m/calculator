@@ -21,10 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception;
+package calculator.exception.parse;
 
-public class NotEnoughParametersException extends Exception {
-    public NotEnoughParametersException(final String message, final Exception e) {
+public class FunctionParseException extends Exception {
+    public FunctionParseException(final String message) {
+        super(message);
+    }
+
+    public FunctionParseException(final String message, final Exception e) {
         super(message, e);
     }
 }

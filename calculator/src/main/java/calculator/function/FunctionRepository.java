@@ -23,13 +23,11 @@
  */
 package calculator.function;
 
-import calculator.exception.FunctionAlreadyExistsException;
-import calculator.exception.FunctionNotDefinedException;
-import calculator.exception.WrongFunctionNameException;
+import calculator.exception.execute.FunctionNotDefinedException;
+import calculator.exception.parse.FunctionParseException;
 
 public interface FunctionRepository {
     Function get(final String name) throws FunctionNotDefinedException;
 
-    void add(final String name, final Function function) throws FunctionAlreadyExistsException,
-            WrongFunctionNameException;
+    void add(final String name, final Function function) throws FunctionParseException;
 }
