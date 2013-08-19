@@ -33,19 +33,19 @@ import calculator.function.builtin.BuiltinFunction;
 import calculator.function.custom.CustomConstant;
 import calculator.function.custom.CustomFunction;
 import calculator.function.custom.FunctionExecutor;
-import calculator.function.custom.FunctionParser;
+import calculator.function.parser.FunctionParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class FunctionFactory {
+public class FunctionRepository {
     private final Map<String, Function> functions = new HashMap<>();
 
     private final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
 
     private final FunctionParser functionParser;
 
-    public FunctionFactory(final FunctionParser functionParser) {
+    public FunctionRepository(final FunctionParser functionParser) {
         this.functionParser = functionParser;
 
         initOperators();
@@ -88,7 +88,7 @@ public class FunctionFactory {
         functions.put("E", new BuiltinConstant.E());
     }
 
-    public Function getFunction(final String name) throws FunctionNotDefinedException {
+    public Function get(final String name) throws FunctionNotDefinedException {
         final Function function = functions.get(name);
         if (function == null) {
             throw new FunctionNotDefinedException(name);
@@ -96,13 +96,13 @@ public class FunctionFactory {
         return function;
     }
 
-    public void registerFunction(final String name, final String functionBody) throws
+    public void addFunction(final String name, final String functionBody) throws
             FunctionAlreadyExistsException, WrongFunctionNameException, FunctionParseException {
         FunctionExecutor executor = prepareFunction(name, functionBody);
         functions.put(name, new CustomFunction(executor));
     }
 
-    public void registerConstant(final String name, final String value) throws
+    public void addConstant(final String name, final String value) throws
             WrongFunctionNameException, FunctionAlreadyExistsException, FunctionParseException {
         FunctionExecutor executor = prepareFunction(name, value);
         functions.put(name, new CustomConstant(executor));

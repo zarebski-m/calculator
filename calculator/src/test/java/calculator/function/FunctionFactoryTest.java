@@ -32,7 +32,7 @@ import calculator.exception.NotEnoughParametersException;
 import calculator.exception.WrongFunctionNameException;
 import calculator.function.custom.CustomFunction;
 import calculator.function.custom.FunctionExecutor;
-import calculator.function.custom.FunctionParser;
+import calculator.function.parser.FunctionParser;
 import java.util.Stack;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
@@ -46,7 +46,7 @@ public class FunctionFactoryTest {
         }
     }
 
-    private FunctionFactory factory;
+    private FunctionRepository factory;
 
     private FunctionParser functionParserMock;
 
@@ -56,7 +56,7 @@ public class FunctionFactoryTest {
     public void setUp() {
         support = new EasyMockSupport();
         functionParserMock = support.createMock(FunctionParser.class);
-        factory = new FunctionFactory(functionParserMock);
+        factory = new FunctionRepository(functionParserMock);
     }
 
     @Test
@@ -76,14 +76,14 @@ public class FunctionFactoryTest {
             "PI", "E"
         };
         for (final String name : names) {
-            Function f = factory.getFunction(name);
+            Function f = factory.get(name);
             assertNotNull(f);
         }
     }
 
     @Test(expected = FunctionNotDefinedException.class)
     public void testGetFunction_functionDoesNotExist() throws Exception {
-        factory.getFunction("undefined");
+        factory.get("undefined");
     }
 
     @Test
@@ -94,20 +94,20 @@ public class FunctionFactoryTest {
         EasyMock.expect(functionParserMock.parse(body)).andReturn(new FunctionExecutorStub());
 
         support.replayAll();
-        factory.registerFunction(name, body);
+        factory.addFunction(name, body);
         support.verifyAll();
 
-        final Function function = factory.getFunction(name);
+        final Function function = factory.get(name);
         assertTrue(function instanceof CustomFunction);
     }
 
     @Test(expected = FunctionAlreadyExistsException.class)
     public void testRegisterFunction_functionAlreadyExists() throws Exception {
-        factory.registerFunction("sin", null);
+        factory.addFunction("sin", null);
     }
 
     @Test(expected = WrongFunctionNameException.class)
     public void testRegisterFunction_wrongName() throws Exception {
-        factory.registerFunction("wrong-name", null);
+        factory.addFunction("wrong-name", null);
     }
 }

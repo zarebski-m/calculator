@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import calculator.exception.FunctionNotDefinedException;
-import calculator.function.FunctionFactory;
+import calculator.function.FunctionRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class TokenFactoryTest {
 
     @Before
     public void setUp() {
-        testedObject = new TokenFactory(new FunctionFactory(null));
+        testedObject = new TokenFactory(new FunctionRepository(null));
     }
 
     @Test

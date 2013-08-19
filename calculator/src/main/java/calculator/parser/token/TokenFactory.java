@@ -24,13 +24,13 @@
 package calculator.parser.token;
 
 import calculator.exception.FunctionNotDefinedException;
-import calculator.function.FunctionFactory;
+import calculator.function.FunctionRepository;
 
 public class TokenFactory {
-    private final FunctionFactory functionFactory;
+    private final FunctionRepository functionRepository;
 
-    public TokenFactory(final FunctionFactory functionFactory) {
-        this.functionFactory = functionFactory;
+    public TokenFactory(final FunctionRepository functionRepository) {
+        this.functionRepository = functionRepository;
     }
 
     public final Token<?> getToken(final String tokenString) throws FunctionNotDefinedException {
@@ -44,7 +44,7 @@ public class TokenFactory {
             case Number:
                 return new NumberToken(tokenString);
             case Function:
-                return new FunctionToken(tokenString, functionFactory.getFunction(tokenString));
+                return new FunctionToken(tokenString, functionRepository.get(tokenString));
             default:
                 throw new UnsupportedOperationException("Unsupported token type for token string: " + tokenString);
         }

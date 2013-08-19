@@ -29,10 +29,10 @@ import calculator.exception.ExpressionExecuteException;
 import calculator.exception.FunctionNotDefinedException;
 import calculator.exception.NotEnoughParametersException;
 import calculator.function.Function;
-import calculator.function.FunctionFactory;
+import calculator.function.FunctionRepository;
 import calculator.function.builtin.TerminalFunction;
-import calculator.function.custom.FunctionParser;
-import calculator.function.custom.FunctionParserImpl;
+import calculator.function.parser.FunctionParser;
+import calculator.function.parser.FunctionParserImpl;
 import calculator.parser.ExpressionTokenizer;
 import calculator.parser.ExpressionTokenizerImpl;
 import calculator.parser.token.FunctionToken;
@@ -48,13 +48,13 @@ public class Calculator {
 
     private final TokenFactory tokenFactory;
 
-    private final FunctionFactory functionFactory;
+    private final FunctionRepository functionFactory;
 
     private final FunctionParser functionParser;
 
     public Calculator() {
         this.functionParser = new FunctionParserImpl();
-        this.functionFactory = new FunctionFactory(functionParser);
+        this.functionFactory = new FunctionRepository(functionParser);
         this.tokenFactory = new TokenFactory(functionFactory);
     }
 

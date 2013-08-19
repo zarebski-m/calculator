@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function.custom;
+package calculator.function.parser;
 
 import calculator.exception.FunctionParseException;
+import calculator.function.custom.FunctionExecutor;
 
 public class FunctionParserImpl implements FunctionParser {
     @Override
