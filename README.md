@@ -14,7 +14,8 @@ Features
   * `log` and `exp`,
   * `abs`, `sgn` and `sqrt`,
   * conversions: degrees to radians (`d2r`), radians to degrees (`r2d`),
-  * `min` and `max`.
+  * `min` and `max`,
+  * `neg` (unary minus).
 * Predefined constants: `PI` and `E`.
 * Calculator allows user to define own custom functions and constants.
 
