@@ -75,7 +75,7 @@ public class CalculatorTest {
         expect(evaluatorMock.evaluate(expr)).andReturn(expected);
 
         support.replayAll();
-        testedObject.evaluateExpression(expr);
+        testedObject.evaluate(expr);
         support.verifyAll();
 
         assertEquals(expected, testedObject.getResult(), EPSILON);
@@ -89,7 +89,7 @@ public class CalculatorTest {
 
         try {
             support.replayAll();
-            testedObject.evaluateExpression(expr);
+            testedObject.evaluate(expr);
             support.verifyAll();
         } catch (ExpressionExecuteException ex) {
             return;

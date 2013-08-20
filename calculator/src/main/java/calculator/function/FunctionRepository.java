@@ -30,4 +30,6 @@ public interface FunctionRepository {
     Function get(final String name) throws FunctionNotDefinedException;
 
     void add(final String name, final Function function) throws FunctionParseException;
+
+    void delete(final String name);
 }

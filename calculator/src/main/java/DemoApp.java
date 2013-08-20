@@ -24,6 +24,8 @@
 
 import calculator.Calculator;
 import calculator.command.Command;
+import calculator.command.CommandResult;
+import calculator.command.EmptyResult;
 import calculator.exception.command.CommandParseException;
 import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
@@ -52,7 +54,7 @@ public final class DemoApp implements Runnable {
         }
     }
 
-    private void writeResult(double result) {
+    private <T> void writeResult(T result) {
         System.out.println(result);
     }
 
@@ -70,9 +72,12 @@ public final class DemoApp implements Runnable {
         while (!"exit".equalsIgnoreCase(line)) {
             try {
                 if (isCommand(line)) {
-                    calc.executeCommand(new Command.Builder().parse(line).build());
+                    CommandResult result = calc.executeCommand(new Command.Builder().parse(line).build());
+                    if (!(result instanceof EmptyResult)) {
+                        writeResult(result.getStringRepresentation());
+                    }
                 } else {
-                    calc.evaluateExpression(line);
+                    calc.evaluate(line);
                     writeResult(calc.getResult());
                 }
             } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException |

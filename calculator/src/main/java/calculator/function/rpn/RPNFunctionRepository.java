@@ -104,4 +104,9 @@ public class RPNFunctionRepository implements FunctionRepository {
         }
         functions.put(name, function);
     }
+
+    @Override
+    public void delete(final String name) {
+        functions.remove(name);
+    }
 }

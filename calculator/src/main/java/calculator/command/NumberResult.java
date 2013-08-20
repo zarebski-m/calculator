@@ -21,10 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception.command;
+package calculator.command;
 
-public class UnknownCommandException extends Exception {
-    public UnknownCommandException() {
-        super();
+public class NumberResult implements CommandResult {
+    private final double number;
+
+    public NumberResult(final double number) {
+        this.number = number;
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        return String.valueOf(number);
+    }
+
+    public double getNumber() {
+        return number;
     }
 }

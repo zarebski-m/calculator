@@ -31,7 +31,12 @@ public class Command {
     public static enum CommandType {
         DefineFunction("func"),
         DefineConstant("const"),
-        Unknown("");
+        Save("s|save"),
+        Recall("r|recall"),
+        Print("p|print"),
+        Clear("c|clear"),
+        ClearAll("ce|clearall"),
+        Unknown(".*");
 
         private final Pattern pattern;
 
@@ -77,15 +82,9 @@ public class Command {
         return content;
     }
 
-    @Override
-    public String toString() {
-        return new StringBuilder().append(type.toString()).append(" ").append(param).append(" ")
-                .append(content).toString();
-    }
-
     public static final class Builder {
         private static final Pattern commandPattern = Pattern.compile(
-                ":(\\w+)\\s+([a-zA-Z][a-zA-Z0-9_]*)\\s*(.*)");
+                ":(\\w+)\\s*([a-zA-Z][a-zA-Z0-9_]*)?\\s*(.*)");
 
         private static final int INDEX_NAME = 1;
 

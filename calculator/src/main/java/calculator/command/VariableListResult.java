@@ -21,10 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.exception.command;
+package calculator.command;
 
-public class UnknownCommandException extends Exception {
-    public UnknownCommandException() {
-        super();
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class VariableListResult implements CommandResult {
+    private final Map<String, Double> variables = new HashMap<>();
+
+    public void addVariable(final String name, final Double value) {
+        variables.put(name, value);
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        final StringBuilder sb = new StringBuilder();
+        for (final Map.Entry<String, Double> var : variables.entrySet()) {
+            sb.append(var.getKey()).append("\t").append(var.getValue()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public Map<String, Double> getVariables() {
+        return Collections.unmodifiableMap(variables);
     }
 }
