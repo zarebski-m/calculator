@@ -23,6 +23,9 @@
  */
 package calculator.tokenizer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimpleExpressionTokenizer implements ExpressionTokenizer {
     /**
      * Used to split without skipping delimiters. For example:
@@ -31,26 +34,49 @@ public class SimpleExpressionTokenizer implements ExpressionTokenizer {
      */
     private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
-    private final String[] tokenStrings;
+    private final List<String> tokenStrings = new ArrayList<>();
 
     private int pos = 0;
 
     public SimpleExpressionTokenizer(final String input) {
-        this.tokenStrings = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
+        final String[] tokens = input.split(String.format(WITH_DELIMITER, "[*\\s+,/()^%-]"));
+        for (final String token : tokens) {
+            if (!token.isEmpty() && !token.matches("\\s")) {
+                tokenStrings.add(token);
+            }
+        }
     }
 
     @Override
     public boolean hasNextToken() {
-        return pos < tokenStrings.length;
+        return pos < tokenStrings.size();
     }
 
     @Override
     public String getNextToken() {
-        final String result = tokenStrings[pos++];
-        while (pos < tokenStrings.length && tokenStrings[pos].matches("\\s")) {
-            // skip white spaces
-            ++pos;
+        String token = tokenStrings.get(pos);
+        if (("-".equals(token) || "+".equals(token)) &&
+                !isNumeric(getPrevious()) && isNumeric(getNext())) {
+            token += tokenStrings.get(++pos);
         }
-        return result;
+        ++pos;
+        return token;
+    }
+
+    private String getPrevious() {
+        return pos > 0 ? tokenStrings.get(pos - 1) : "";
+    }
+
+    private String getNext() {
+        return pos < tokenStrings.size() - 1 ? tokenStrings.get(pos + 1) : "";
+    }
+
+    private static boolean isNumeric(final String str) {
+        try {
+            Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }

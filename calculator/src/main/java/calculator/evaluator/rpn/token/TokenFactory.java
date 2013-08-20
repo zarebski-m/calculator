@@ -62,10 +62,8 @@ public class TokenFactory {
         }
 
         try {
-            final Double value = Double.valueOf(tokenString);
-            if (value != null) {
-                return Token.TokenType.Number;
-            }
+            Double.parseDouble(tokenString);
+            return Token.TokenType.Number;
         } catch (NumberFormatException e) {
             // intentionally left blank
         }

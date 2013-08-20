@@ -38,15 +38,15 @@ public class SimpleExpressionTokenizerTest {
 
     @Test
     public void testGetNextToken_simpleExpression() throws Exception {
-        final String input = "1+2 *3";
-        checkTokenizer(input, "1", "+", "2", "*", "3");
+        final String input = "1+2 *-3";
+        checkTokenizer(input, "1", "+", "2", "*", "-3");
     }
 
     @Test
     public void testGetNextToken_bigExpression() throws Exception {
-        final String input = "1+2*3-A(B(1.2^3.4/5.6\t% C123( 0,9, 1 ,5)))";
-        checkTokenizer(input, "1", "+", "2", "*", "3", "-", "A", "(", "B", "(", "1.2", "^", "3.4", "/", "5.6", "%",
-                "C123", "(", "0", ",", "9", ",", "1", ",", "5", ")", ")", ")");
+        final String input = "1+2*3-A(B(1.2^-3.4/+5.6\t% C123( 0,9, 1 ,5)))";
+        checkTokenizer(input, "1", "+", "2", "*", "3", "-", "A", "(", "B", "(", "1.2", "^", "-3.4", "/", "+5.6",
+                "%", "C123", "(", "0", ",", "9", ",", "1", ",", "5", ")", ")", ")");
     }
 
     private void checkTokenizer(final String input, final String... strings) {
