@@ -23,8 +23,8 @@
  */
 package calculator.function.rpn;
 
-import calculator.exception.parse.FunctionAlreadyExistsException;
 import calculator.exception.execute.FunctionNotDefinedException;
+import calculator.exception.parse.FunctionAlreadyExistsException;
 import calculator.exception.parse.WrongFunctionNameException;
 import calculator.function.Function;
 import calculator.function.FunctionRepository;
@@ -74,6 +74,8 @@ public class RPNFunctionRepository implements FunctionRepository {
         functions.put("sqrt", new BuiltinFunction.SquareRoot());
         functions.put("d2r", new BuiltinFunction.DegreesToRadians());
         functions.put("r2d", new BuiltinFunction.RadiansToDegrees());
+        functions.put("min", new BuiltinFunction.Min());
+        functions.put("max", new BuiltinFunction.Max());
     }
 
     private void initConstants() {

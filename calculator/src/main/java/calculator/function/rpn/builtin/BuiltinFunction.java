@@ -233,4 +233,30 @@ public final class BuiltinFunction {
             }
         }
     }
+
+    public static final class Min extends AbstractFunction {
+        @Override
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val2 = stack.pop();
+                final double val1 = stack.pop();
+                stack.push(Math.min(val1, val2));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("min", e);
+            }
+        }
+    }
+
+    public static final class Max extends AbstractFunction {
+        @Override
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val2 = stack.pop();
+                final double val1 = stack.pop();
+                stack.push(Math.max(val1, val2));
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("max", e);
+            }
+        }
+    }
 }

@@ -23,12 +23,14 @@
  */
 package calculator.function.rpn.builtin;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import calculator.exception.execute.NotEnoughParametersException;
 import calculator.function.Function;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,44 +43,50 @@ public class BuiltinFunctionTest {
 
     private Function function;
 
-    private double value;
+    private List<Double> params;
 
     private double expectedResult;
 
-    public BuiltinFunctionTest(Function function, double value, double expectedResult) {
+    public BuiltinFunctionTest(final Function function, final List<Double> params, double expectedResult) {
         this.function = function;
-        this.value = value;
+        this.params = params;
         this.expectedResult = expectedResult;
     }
 
     @Parameters
     public static Collection<Object[]> data() {
         Object[][] data = new Object[][] {
-            {new BuiltinFunction.Sinus(), Math.PI, 0.0},
-            {new BuiltinFunction.Cosinus(), Math.PI, -1.0},
-            {new BuiltinFunction.Tangent(), 0.0, 0.0},
-            {new BuiltinFunction.ArcSinus(), 0.0, 0.0},
-            {new BuiltinFunction.ArcCosinus(), 0.0, Math.PI / 2.0},
-            {new BuiltinFunction.ArcTangent(), Double.POSITIVE_INFINITY, Math.PI / 2.0},
-            {new BuiltinFunction.SinusHyperbolic(), 0.0, 0.0},
-            {new BuiltinFunction.CosinusHyperbolic(), 0.0, 1.0},
-            {new BuiltinFunction.TangentHyperbolic(), 0.0, 0.0},
-            {new BuiltinFunction.AbsoluteValue(), -1.0, 1.0},
-            {new BuiltinFunction.Log(), Math.E, 1.0},
-            {new BuiltinFunction.Exp(), 1.0, Math.E},
-            {new BuiltinFunction.Signum(), 0.1, 1.0},
-            {new BuiltinFunction.Signum(), 0.0, 0.0},
-            {new BuiltinFunction.Signum(), -0.1, -1.0},
-            {new BuiltinFunction.SquareRoot(), 9.0, 3.0},
-            {new BuiltinFunction.DegreesToRadians(), 90.0, Math.PI / 2.0},
-            {new BuiltinFunction.RadiansToDegrees(), Math.PI, 180.0},};
+            {new BuiltinFunction.Sinus(), asList(Math.PI), 0.0},
+            {new BuiltinFunction.Cosinus(), asList(Math.PI), -1.0},
+            {new BuiltinFunction.Tangent(), asList(0.0), 0.0},
+            {new BuiltinFunction.ArcSinus(), asList(0.0), 0.0},
+            {new BuiltinFunction.ArcCosinus(), asList(0.0), Math.PI / 2.0},
+            {new BuiltinFunction.ArcTangent(), asList(Double.POSITIVE_INFINITY), Math.PI / 2.0},
+            {new BuiltinFunction.ArcTangent2(), asList(1.0, 0.0), Math.PI / 2.0},
+            {new BuiltinFunction.SinusHyperbolic(), asList(0.0), 0.0},
+            {new BuiltinFunction.CosinusHyperbolic(), asList(0.0), 1.0},
+            {new BuiltinFunction.TangentHyperbolic(), asList(0.0), 0.0},
+            {new BuiltinFunction.AbsoluteValue(), asList(-1.0), 1.0},
+            {new BuiltinFunction.Log(), asList(Math.E), 1.0},
+            {new BuiltinFunction.Exp(), asList(1.0), Math.E},
+            {new BuiltinFunction.Signum(), asList(0.1), 1.0},
+            {new BuiltinFunction.Signum(), asList(0.0), 0.0},
+            {new BuiltinFunction.Signum(), asList(-0.1), -1.0},
+            {new BuiltinFunction.SquareRoot(), asList(9.0), 3.0},
+            {new BuiltinFunction.DegreesToRadians(), asList(90.0), Math.PI / 2.0},
+            {new BuiltinFunction.RadiansToDegrees(), asList(Math.PI), 180.0},
+            {new BuiltinFunction.Min(), asList(1.0, 0.0), 0.0},
+            {new BuiltinFunction.Max(), asList(1.0, 0.0), 1.0}
+        };
         return Arrays.asList(data);
     }
 
     @Test
     public void testExecute() throws Exception {
         Stack<Double> stack = new Stack<>();
-        stack.push(value);
+        for (final double param : params) {
+            stack.push(param);
+        }
         function.apply(stack);
         assertEquals(expectedResult, stack.peek(), EPSILON);
     }
