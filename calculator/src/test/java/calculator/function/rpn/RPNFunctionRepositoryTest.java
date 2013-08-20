@@ -26,8 +26,8 @@ package calculator.function.rpn;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import calculator.exception.parse.FunctionAlreadyExistsException;
 import calculator.exception.execute.FunctionNotDefinedException;
+import calculator.exception.parse.FunctionAlreadyExistsException;
 import calculator.exception.parse.WrongFunctionNameException;
 import calculator.function.Function;
 import calculator.function.rpn.builtin.BuiltinFunction;
@@ -54,7 +54,7 @@ public class RPNFunctionRepositoryTest {
             // conversion
             "d2r", "r2d",
             // other
-            "abs", "log", "exp", "sgn", "sqrt",
+            "abs", "log", "exp", "sgn", "sqrt", "min", "max", "neg",
             // constants
             "PI", "E"
         };

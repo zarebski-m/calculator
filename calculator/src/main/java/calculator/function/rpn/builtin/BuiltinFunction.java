@@ -259,4 +259,16 @@ public final class BuiltinFunction {
             }
         }
     }
+
+    public static final class Negation extends AbstractFunction {
+        @Override
+        public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
+            try {
+                final double val = stack.pop();
+                stack.push(-val);
+            } catch (EmptyStackException e) {
+                throw new NotEnoughParametersException("neg", e);
+            }
+        }
+    }
 }

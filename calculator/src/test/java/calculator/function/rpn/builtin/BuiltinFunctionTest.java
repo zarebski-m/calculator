@@ -28,7 +28,6 @@ import static org.junit.Assert.assertEquals;
 
 import calculator.exception.execute.NotEnoughParametersException;
 import calculator.function.Function;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
@@ -76,9 +75,10 @@ public class BuiltinFunctionTest {
             {new BuiltinFunction.DegreesToRadians(), asList(90.0), Math.PI / 2.0},
             {new BuiltinFunction.RadiansToDegrees(), asList(Math.PI), 180.0},
             {new BuiltinFunction.Min(), asList(1.0, 0.0), 0.0},
-            {new BuiltinFunction.Max(), asList(1.0, 0.0), 1.0}
+            {new BuiltinFunction.Max(), asList(1.0, 0.0), 1.0},
+            {new BuiltinFunction.Negation(), asList(1.0), -1.0}
         };
-        return Arrays.asList(data);
+        return asList(data);
     }
 
     @Test

@@ -76,6 +76,7 @@ public class RPNFunctionRepository implements FunctionRepository {
         functions.put("r2d", new BuiltinFunction.RadiansToDegrees());
         functions.put("min", new BuiltinFunction.Min());
         functions.put("max", new BuiltinFunction.Max());
+        functions.put("neg", new BuiltinFunction.Negation());
     }
 
     private void initConstants() {
