@@ -59,16 +59,16 @@ public class RPNFunctionRepository implements FunctionRepository {
     }
 
     private void initFunctions() {
-        builtinFunctions.put("sin", new BuiltinFunction.Sinus());
-        builtinFunctions.put("cos", new BuiltinFunction.Cosinus());
-        builtinFunctions.put("tan", new BuiltinFunction.Tangent());
-        builtinFunctions.put("asin", new BuiltinFunction.ArcSinus());
-        builtinFunctions.put("acos", new BuiltinFunction.ArcCosinus());
-        builtinFunctions.put("atan", new BuiltinFunction.ArcTangent());
-        builtinFunctions.put("atan2", new BuiltinFunction.ArcTangent2());
-        builtinFunctions.put("sinh", new BuiltinFunction.SinusHyperbolic());
-        builtinFunctions.put("cosh", new BuiltinFunction.CosinusHyperbolic());
-        builtinFunctions.put("tanh", new BuiltinFunction.TangentHyperbolic());
+        builtinFunctions.put("sin", new BuiltinFunction.Sin());
+        builtinFunctions.put("cos", new BuiltinFunction.Cos());
+        builtinFunctions.put("tan", new BuiltinFunction.Tan());
+        builtinFunctions.put("asin", new BuiltinFunction.ArcSin());
+        builtinFunctions.put("acos", new BuiltinFunction.ArcCos());
+        builtinFunctions.put("atan", new BuiltinFunction.ArcTan());
+        builtinFunctions.put("atan2", new BuiltinFunction.ArcTan2());
+        builtinFunctions.put("sinh", new BuiltinFunction.SinHyperbolic());
+        builtinFunctions.put("cosh", new BuiltinFunction.CosHyperbolic());
+        builtinFunctions.put("tanh", new BuiltinFunction.TanHyperbolic());
 
         builtinFunctions.put("abs", new BuiltinFunction.AbsoluteValue());
         builtinFunctions.put("log", new BuiltinFunction.Log());

@@ -29,7 +29,7 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public final class BuiltinFunction {
-    public static final class Sinus extends AbstractFunction {
+    public static final class Sin extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -41,7 +41,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class Cosinus extends AbstractFunction {
+    public static final class Cos extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -53,7 +53,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class Tangent extends AbstractFunction {
+    public static final class Tan extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -65,7 +65,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class ArcSinus extends AbstractFunction {
+    public static final class ArcSin extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -77,7 +77,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class ArcCosinus extends AbstractFunction {
+    public static final class ArcCos extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -89,7 +89,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class ArcTangent extends AbstractFunction {
+    public static final class ArcTan extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -101,7 +101,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class ArcTangent2 extends AbstractFunction {
+    public static final class ArcTan2 extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -114,7 +114,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class SinusHyperbolic extends AbstractFunction {
+    public static final class SinHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -126,7 +126,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class CosinusHyperbolic extends AbstractFunction {
+    public static final class CosHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {
@@ -138,7 +138,7 @@ public final class BuiltinFunction {
         }
     }
 
-    public static final class TangentHyperbolic extends AbstractFunction {
+    public static final class TanHyperbolic extends AbstractFunction {
         @Override
         public void apply(final Stack<Double> stack) throws NotEnoughParametersException {
             try {

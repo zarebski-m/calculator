@@ -246,7 +246,7 @@ public class CalculatorTest {
         final String name2 = "name2";
         final Map<String, Function> map = new HashMap<>();
         map.put(name1, new DoubleConstant(1.0));
-        map.put(name2, new BuiltinFunction.Sinus());
+        map.put(name2, new BuiltinFunction.Sin());
 
         expect(functionRepositoryMock.getFunctions()).andReturn(map);
 
