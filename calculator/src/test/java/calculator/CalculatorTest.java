@@ -23,17 +23,22 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import calculator.command.Command;
+import calculator.command.CommandResult;
+import calculator.command.FunctionListResult;
 import calculator.evaluator.Evaluator;
 import calculator.exception.command.UnknownCommandException;
 import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.parse.ConstantWithParametersException;
 import calculator.function.Function;
 import calculator.function.FunctionRepository;
+import calculator.function.rpn.builtin.BuiltinFunction;
 import calculator.function.rpn.builtin.DoubleConstant;
 import calculator.function.rpn.custom.CustomConstant;
 import calculator.function.rpn.custom.CustomFunction;
 import calculator.function.rpn.custom.FunctionExecutor;
 import calculator.parser.FunctionParser;
+import java.util.HashMap;
+import java.util.Map;
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -232,6 +237,54 @@ public class CalculatorTest {
         support.replayAll();
         testedObject.executeCommand(cmd);
         support.verifyAll();
+    }
+
+    @Test
+    public void testExecuteCommand_print() throws Exception {
+        final Command cmd = new Command.Builder().withName("p").build();
+        final String name1 = "name1";
+        final String name2 = "name2";
+        final Map<String, Function> map = new HashMap<>();
+        map.put(name1, new DoubleConstant(1.0));
+        map.put(name2, new BuiltinFunction.Sinus());
+
+        expect(functionRepositoryMock.getFunctions()).andReturn(map);
+
+        support.replayAll();
+        CommandResult result = testedObject.executeCommand(cmd);
+        support.verifyAll();
+
+        assertTrue(result instanceof FunctionListResult);
+
+        final FunctionListResult funcList = (FunctionListResult)result;
+        assertEquals(2, funcList.getFunctions().size());
+        assertTrue(funcList.getFunctions().containsKey(name1));
+        assertTrue(funcList.getFunctions().containsKey(name2));
+
+        final String str = result.getStringRepresentation();
+        assertTrue(str.contains(name1));
+        assertTrue(str.contains(name2));
+        assertTrue(str.contains("<function>"));
+        assertTrue(str.contains("<constant>"));
+    }
+
+    @Test
+    public void testExecuteCommand_printBuiltin() throws Exception {
+        final Command cmd = new Command.Builder().withName("pd").build();
+        final String name = "name2";
+        final Map<String, Function> map = new HashMap<>();
+        map.put(name, new DoubleConstant(1.0));
+
+        expect(functionRepositoryMock.getBuiltinFunctions()).andReturn(map);
+
+        support.replayAll();
+        CommandResult result = testedObject.executeCommand(cmd);
+        support.verifyAll();
+
+        assertTrue(result instanceof FunctionListResult);
+        FunctionListResult funcList = (FunctionListResult)result;
+        assertEquals(1, funcList.getFunctions().size());
+        assertTrue(funcList.getFunctions().containsKey(name));
     }
 
     @Test(expected = UnknownCommandException.class)
