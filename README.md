@@ -97,12 +97,12 @@ Function or constant name cannot be equal to any of the default function or cons
 
 * `:func {name} {expression}` - define a function with name `{name}`. Examples of function definitions:
   * `:func square {0}*{0}` - defines an unary function named `square` that multiplies the argument by itself,
-  * `:func dist max({0},{1}) - min({0},{1})` - defines binary function calculating absolute distancee between two numbers.
+  * `:func dist max({0},{1}) - min({0},{1})` - defines binary function calculating absolute distance between two numbers.
 * `:const {name} {expression}` - define a constant with name `{name}`. Examples of constant definitions:
   * `:const ONE 1` - constant with value 1,
   * `:const PI_2 PI/2` - constant with value PI / 2.
 * `:s {name}` - save last result (i.e. `ans`) to a new constant named `{name}`.
-* 
+
 **Printing functions and constants**
 
 * `:p` - print all custom functions and constants.
