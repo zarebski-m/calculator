@@ -26,8 +26,7 @@ package calculator;
 import calculator.command.Command;
 import calculator.command.CommandResult;
 import calculator.command.EmptyResult;
-import calculator.command.NumberResult;
-import calculator.command.VariableListResult;
+import calculator.command.FunctionListResult;
 import calculator.evaluator.Evaluator;
 import calculator.evaluator.rpn.RPNEvaluator;
 import calculator.exception.command.UnknownCommandException;
@@ -35,16 +34,18 @@ import calculator.exception.execute.ExpressionExecuteException;
 import calculator.exception.parse.FunctionParseException;
 import calculator.function.FunctionRepository;
 import calculator.function.rpn.RPNFunctionRepository;
+import calculator.function.rpn.builtin.DoubleConstant;
 import calculator.function.rpn.custom.CustomConstant;
 import calculator.function.rpn.custom.CustomFunction;
 import calculator.function.rpn.custom.FunctionExecutor;
 import calculator.parser.FunctionParser;
 import calculator.parser.SimpleFunctionParser;
 import com.google.common.annotations.VisibleForTesting;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Calculator {
+    @VisibleForTesting
+    static final String ANS = "ans";
+
     private Evaluator evaluator;
 
     private Evaluator helperEvaluator;
@@ -52,8 +53,6 @@ public class Calculator {
     private FunctionRepository functionRepository;
 
     private FunctionParser functionParser;
-
-    private final Set<String> variableNames = new HashSet<>();
 
     public Calculator() {
         functionRepository = new RPNFunctionRepository();
@@ -67,9 +66,13 @@ public class Calculator {
     public void evaluate(final String expression) throws ExpressionExecuteException {
         try {
             actualResult = evaluator.evaluate(expression);
+            functionRepository.update(ANS, new DoubleConstant(actualResult));
         } catch (ExpressionExecuteException ex) {
             actualResult = Double.NaN;
             throw ex;
+        } catch (FunctionParseException ex) {
+            actualResult = Double.NaN;
+            throw new ExpressionExecuteException(expression, ex);
         }
     }
 
@@ -77,41 +80,45 @@ public class Calculator {
         return actualResult;
     }
 
-    public void addFunction(final String name, final String functionBody) throws FunctionParseException {
+    public void putFunction(final String name, final String functionBody) throws FunctionParseException {
         final FunctionExecutor executor = functionParser.parse(functionBody);
-        functionRepository.add(name, new CustomFunction(executor));
+        functionRepository.update(name, new CustomFunction(executor));
     }
 
-    public void addConstant(final String name, final String expression) throws FunctionParseException {
+    public void putConstant(final String name, final String expression) throws FunctionParseException {
         final FunctionExecutor executor = functionParser.parse(expression);
-        functionRepository.add(name, new CustomConstant(executor));
+        functionRepository.update(name, new CustomConstant(executor));
+    }
+
+    public void putConstant(final String name, final Double value) throws FunctionParseException {
+        functionRepository.update(name, new DoubleConstant(value));
     }
 
     public void deleteFunctionOrConstant(final String name) {
         functionRepository.delete(name);
     }
 
-    public void clear() {
+    public void clear() throws FunctionParseException {
         actualResult = 0.0;
+        functionRepository.update("ans", new DoubleConstant(actualResult));
     }
 
-    public void clearAll() {
+    public void clearAll() throws FunctionParseException {
+        functionRepository.clear();
         clear();
-        for (final String var : variableNames) {
-            deleteFunctionOrConstant(var);
-        }
-        variableNames.clear();
     }
 
     public CommandResult executeCommand(final Command command) throws FunctionParseException,
-            UnknownCommandException,
-            ExpressionExecuteException {
+            UnknownCommandException, ExpressionExecuteException {
         switch (command.getType()) {
             case DefineFunction:
-                addFunction(command.getParam(), command.getContent());
+                putFunction(command.getParam(), command.getContent());
                 return new EmptyResult();
             case DefineConstant:
-                addConstant(command.getParam(), command.getContent());
+                putConstant(command.getParam(), command.getContent());
+                return new EmptyResult();
+            case Delete:
+                deleteFunctionOrConstant(command.getParam());
                 return new EmptyResult();
             case Clear:
                 clear();
@@ -119,24 +126,14 @@ public class Calculator {
             case ClearAll:
                 clearAll();
                 return new EmptyResult();
-            case Recall:
-                if (command.getParam() != null) {
-                    evaluate(command.getParam());
-                }
-                return new NumberResult(getResult());
             case Save:
                 final String name = command.getParam();
-                deleteFunctionOrConstant(name);
-                addConstant(name, String.valueOf(getResult()));
-                variableNames.add(name);
+                putConstant(name, getResult());
                 return new EmptyResult();
             case Print:
-                final VariableListResult result = new VariableListResult();
-                for (final String varName : variableNames) {
-                    evaluate(varName);
-                    result.addVariable(varName, getResult());
-                }
-                return result;
+                return new FunctionListResult(functionRepository.getFunctions());
+            case PrintBuiltin:
+                return new FunctionListResult(functionRepository.getBuiltinFunctions());
             default:
                 throw new UnknownCommandException();
         }

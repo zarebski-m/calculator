@@ -73,7 +73,7 @@ public class RPNFunctionRepositoryTest {
     public void testRegisterFunction_success() throws Exception {
         final String name = "sin_new";
 
-        factory.add(name, new BuiltinFunction.AbsoluteValue());
+        factory.update(name, new BuiltinFunction.AbsoluteValue());
 
         final Function function = factory.get(name);
         assertTrue(function instanceof BuiltinFunction.AbsoluteValue);
@@ -81,11 +81,11 @@ public class RPNFunctionRepositoryTest {
 
     @Test(expected = FunctionAlreadyExistsException.class)
     public void testRegisterFunction_functionAlreadyExists() throws Exception {
-        factory.add("sin", null);
+        factory.update("sin", null);
     }
 
     @Test(expected = WrongFunctionNameException.class)
     public void testRegisterFunction_wrongName() throws Exception {
-        factory.add("wrong-name", null);
+        factory.update("wrong-name", null);
     }
 }

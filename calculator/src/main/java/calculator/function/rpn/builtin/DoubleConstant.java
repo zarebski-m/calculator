@@ -21,29 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.command;
+package calculator.function.rpn.builtin;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import calculator.function.rpn.AbstractConstant;
+import java.util.Stack;
 
-public class VariableListResult implements CommandResult {
-    private final Map<String, Double> variables = new HashMap<>();
+public class DoubleConstant extends AbstractConstant {
+    private final double value;
 
-    public void addVariable(final String name, final Double value) {
-        variables.put(name, value);
+    public DoubleConstant(final double value) {
+        super();
+        this.value = value;
     }
 
     @Override
-    public String getStringRepresentation() {
-        final StringBuilder sb = new StringBuilder();
-        for (final Map.Entry<String, Double> var : variables.entrySet()) {
-            sb.append(var.getKey()).append("\t").append(var.getValue()).append("\n");
-        }
-        return sb.toString();
-    }
-
-    public Map<String, Double> getVariables() {
-        return Collections.unmodifiableMap(variables);
+    public void apply(final Stack<Double> stack) {
+        stack.push(value);
     }
 }

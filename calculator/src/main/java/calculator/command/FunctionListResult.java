@@ -21,20 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package calculator.function.rpn;
+package calculator.command;
 
 import calculator.function.Function;
+import calculator.function.rpn.AbstractConstant;
+import calculator.function.rpn.AbstractFunction;
+import java.util.Collections;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-public abstract class AbstractConstant implements Function {
-    private static final int PRIORITY_CONSTANT = 100;
+public class FunctionListResult implements CommandResult {
+    private final SortedMap<String, Function> functions = new TreeMap<>();
 
-    @Override
-    public final int getPriority() {
-        return PRIORITY_CONSTANT;
+    public FunctionListResult(final Map<String, Function> functions) {
+        this.functions.putAll(functions);
     }
 
     @Override
-    public final Associativity getAssociativity() {
-        return Associativity.Left;
+    public String getStringRepresentation() {
+        final StringBuilder sb = new StringBuilder();
+        for (final Map.Entry<String, Function> var : functions.entrySet()) {
+            sb.append(var.getKey()).append("\t");
+            if (var.getValue() instanceof AbstractFunction) {
+                sb.append("<function>");
+            } else if (var.getValue() instanceof AbstractConstant) {
+                sb.append("<constant>");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public Map<String, Function> getFunctions() {
+        return Collections.unmodifiableMap(functions);
     }
 }

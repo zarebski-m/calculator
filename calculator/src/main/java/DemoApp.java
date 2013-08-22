@@ -54,7 +54,7 @@ public final class DemoApp implements Runnable {
         }
     }
 
-    private <T> void writeResult(T result) {
+    private <T> void write(T result) {
         System.out.println(result);
     }
 
@@ -74,11 +74,11 @@ public final class DemoApp implements Runnable {
                 if (isCommand(line)) {
                     CommandResult result = calc.executeCommand(new Command.Builder().parse(line).build());
                     if (!(result instanceof EmptyResult)) {
-                        writeResult(result.getStringRepresentation());
+                        write(result.getStringRepresentation());
                     }
                 } else {
                     calc.evaluate(line);
-                    writeResult(calc.getResult());
+                    write(calc.getResult());
                 }
             } catch (ExpressionExecuteException | FunctionParseException | UnknownCommandException |
                     CommandParseException ex) {

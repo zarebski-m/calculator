@@ -32,8 +32,9 @@ public class Command {
         DefineFunction("func"),
         DefineConstant("const"),
         Save("s|save"),
-        Recall("r|recall"),
         Print("p|print"),
+        PrintBuiltin("pd|printdefault"),
+        Delete("del"),
         Clear("c|clear"),
         ClearAll("ce|clearall"),
         Unknown(".*");

@@ -25,11 +25,18 @@ package calculator.function;
 
 import calculator.exception.execute.FunctionNotDefinedException;
 import calculator.exception.parse.FunctionParseException;
+import java.util.Map;
 
 public interface FunctionRepository {
     Function get(final String name) throws FunctionNotDefinedException;
 
-    void add(final String name, final Function function) throws FunctionParseException;
+    void update(final String name, final Function function) throws FunctionParseException;
 
     void delete(final String name);
+
+    void clear();
+
+    Map<String, Function> getBuiltinFunctions();
+
+    Map<String, Function> getFunctions();
 }

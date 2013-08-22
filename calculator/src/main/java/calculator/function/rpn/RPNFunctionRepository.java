@@ -31,11 +31,14 @@ import calculator.function.FunctionRepository;
 import calculator.function.rpn.builtin.BinaryOperatorFunction;
 import calculator.function.rpn.builtin.BuiltinConstant;
 import calculator.function.rpn.builtin.BuiltinFunction;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RPNFunctionRepository implements FunctionRepository {
+    private final Map<String, Function> builtinFunctions = new HashMap<>();
+
     private final Map<String, Function> functions = new HashMap<>();
 
     private final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
@@ -47,59 +50,65 @@ public class RPNFunctionRepository implements FunctionRepository {
     }
 
     private void initOperators() {
-        functions.put("+", new BinaryOperatorFunction.Add());
-        functions.put("-", new BinaryOperatorFunction.Substract());
-        functions.put("*", new BinaryOperatorFunction.Multiply());
-        functions.put("/", new BinaryOperatorFunction.Divide());
-        functions.put("%", new BinaryOperatorFunction.Modulo());
-        functions.put("^", new BinaryOperatorFunction.Power());
+        builtinFunctions.put("+", new BinaryOperatorFunction.Add());
+        builtinFunctions.put("-", new BinaryOperatorFunction.Substract());
+        builtinFunctions.put("*", new BinaryOperatorFunction.Multiply());
+        builtinFunctions.put("/", new BinaryOperatorFunction.Divide());
+        builtinFunctions.put("%", new BinaryOperatorFunction.Modulo());
+        builtinFunctions.put("^", new BinaryOperatorFunction.Power());
     }
 
     private void initFunctions() {
-        functions.put("sin", new BuiltinFunction.Sinus());
-        functions.put("cos", new BuiltinFunction.Cosinus());
-        functions.put("tan", new BuiltinFunction.Tangent());
-        functions.put("asin", new BuiltinFunction.ArcSinus());
-        functions.put("acos", new BuiltinFunction.ArcCosinus());
-        functions.put("atan", new BuiltinFunction.ArcTangent());
-        functions.put("atan2", new BuiltinFunction.ArcTangent2());
-        functions.put("sinh", new BuiltinFunction.SinusHyperbolic());
-        functions.put("cosh", new BuiltinFunction.CosinusHyperbolic());
-        functions.put("tanh", new BuiltinFunction.TangentHyperbolic());
+        builtinFunctions.put("sin", new BuiltinFunction.Sinus());
+        builtinFunctions.put("cos", new BuiltinFunction.Cosinus());
+        builtinFunctions.put("tan", new BuiltinFunction.Tangent());
+        builtinFunctions.put("asin", new BuiltinFunction.ArcSinus());
+        builtinFunctions.put("acos", new BuiltinFunction.ArcCosinus());
+        builtinFunctions.put("atan", new BuiltinFunction.ArcTangent());
+        builtinFunctions.put("atan2", new BuiltinFunction.ArcTangent2());
+        builtinFunctions.put("sinh", new BuiltinFunction.SinusHyperbolic());
+        builtinFunctions.put("cosh", new BuiltinFunction.CosinusHyperbolic());
+        builtinFunctions.put("tanh", new BuiltinFunction.TangentHyperbolic());
 
-        functions.put("abs", new BuiltinFunction.AbsoluteValue());
-        functions.put("log", new BuiltinFunction.Log());
-        functions.put("exp", new BuiltinFunction.Exp());
-        functions.put("sgn", new BuiltinFunction.Signum());
-        functions.put("sqrt", new BuiltinFunction.SquareRoot());
-        functions.put("d2r", new BuiltinFunction.DegreesToRadians());
-        functions.put("r2d", new BuiltinFunction.RadiansToDegrees());
-        functions.put("min", new BuiltinFunction.Min());
-        functions.put("max", new BuiltinFunction.Max());
-        functions.put("neg", new BuiltinFunction.Negation());
+        builtinFunctions.put("abs", new BuiltinFunction.AbsoluteValue());
+        builtinFunctions.put("log", new BuiltinFunction.Log());
+        builtinFunctions.put("exp", new BuiltinFunction.Exp());
+        builtinFunctions.put("sgn", new BuiltinFunction.Signum());
+        builtinFunctions.put("sqrt", new BuiltinFunction.SquareRoot());
+        builtinFunctions.put("d2r", new BuiltinFunction.DegreesToRadians());
+        builtinFunctions.put("r2d", new BuiltinFunction.RadiansToDegrees());
+        builtinFunctions.put("min", new BuiltinFunction.Min());
+        builtinFunctions.put("max", new BuiltinFunction.Max());
+        builtinFunctions.put("neg", new BuiltinFunction.Negation());
     }
 
     private void initConstants() {
-        functions.put("PI", new BuiltinConstant.Pi());
-        functions.put("E", new BuiltinConstant.E());
+        builtinFunctions.put("PI", new BuiltinConstant.Pi());
+        builtinFunctions.put("E", new BuiltinConstant.E());
     }
 
     @Override
     public Function get(final String name) throws FunctionNotDefinedException {
-        final Function function = functions.get(name);
-        if (function == null) {
-            throw new FunctionNotDefinedException(name);
+        final Function tempFunction = functions.get(name);
+        if (tempFunction != null) {
+            return tempFunction;
         }
-        return function;
+        final Function builtin = builtinFunctions.get(name);
+        if (builtin != null) {
+            return builtin;
+        }
+
+        throw new FunctionNotDefinedException(name);
+
     }
 
     @Override
-    public void add(final String name, final Function function) throws FunctionAlreadyExistsException,
+    public void update(final String name, final Function function) throws FunctionAlreadyExistsException,
             WrongFunctionNameException {
         if (!namePattern.matcher(name).matches()) {
             throw new WrongFunctionNameException(name);
         }
-        if (functions.containsKey(name)) {
+        if (builtinFunctions.containsKey(name)) {
             throw new FunctionAlreadyExistsException(name);
         }
         functions.put(name, function);
@@ -108,5 +117,20 @@ public class RPNFunctionRepository implements FunctionRepository {
     @Override
     public void delete(final String name) {
         functions.remove(name);
+    }
+
+    @Override
+    public void clear() {
+        functions.clear();
+    }
+
+    @Override
+    public Map<String, Function> getBuiltinFunctions() {
+        return Collections.unmodifiableMap(builtinFunctions);
+    }
+
+    @Override
+    public Map<String, Function> getFunctions() {
+        return Collections.unmodifiableMap(functions);
     }
 }
