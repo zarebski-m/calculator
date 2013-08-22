@@ -71,17 +71,39 @@ Moreover, functions have higher priority than operators. Following table shows o
   <td>Function</td><td>10</td><td>Right</td><td></td>
 </tr>
 <tr>
-  <td>Constant</td><td>100</td><td>Right</td><td>Constants are a special kind of functions that take no parameters. “Ultra high” priority causes them to be always evaluated first.</td>
+  <td>Constant</td><td>100</td><td>Left</td><td>Constants are a special kind of functions that take no parameters. “Ultra high” priority causes them to be always evaluated first, and left associativity assures they are left-to-right evaluated.</td>
 </tr>
 </table>
 
-Defining custom functions and constants
----------------------------------------
+Special commands
+----------------
+
+Special commands start with colon (`:`). Here is the list of all defined commands:
+* `:c`, `:del` and `:ce` - clear and clear all,
+* `:func`, `:const` and `:s` - user defined functions and constants,
+* `:p` and `:pd` - print list of functions and constants.
+
+**Clearing results**
+
+* `:c` - clear. Result of every expression evaluation is stored in variable `ans`. Command `:c` erases last result and sets `ans` to 0.
+* `:del {name}` - deletes constant or function with name `{name}`. Default builtin functions and constants (e.e. `sin` or `PI`) cannot be removed.
+* `:ce` - clear all. Clears last result (see `:c`) and deletes all user defined functions and constants.
+
+**Defining functions and constants**
 
 Custom functions and constants are nothing more than expressions. Arguments for function are denoted in its body as `{0}`, `{1}`..., `{N}`. Constants are functions without arguments, which makes them constant expressions.
 
-To define function or constant, special notation is used. Below a few examples of function and constants definitions:
-* `:func square {0}*{0}` - defines an unary function named `square` that multiplies the argument by itself.
-* `:func dist max({0},{1}) - min({0},{1})` - defines binary function calculating absolute distancee between two numbers.
-* `:const ONE 1` - constant with value 1.
-* `:const PI_2 PI/2` - constant with value PI / 2.
+Function or constant name cannot be equal to any of the default function or constant. If custom (non-default) function or constant with the same name already exists, new function or constant overwrites it.
+
+* `:func {name} {expression}` - define a function with name `{name}`. Examples of function definitions:
+  * `:func square {0}*{0}` - defines an unary function named `square` that multiplies the argument by itself,
+  * `:func dist max({0},{1}) - min({0},{1})` - defines binary function calculating absolute distancee between two numbers.
+* `:const {name} {expression}` - define a constant with name `{name}`. Examples of constant definitions:
+  * `:const ONE 1` - constant with value 1,
+  * `:const PI_2 PI/2` - constant with value PI / 2.
+* `:s {name}` - save last result (i.e. `ans`) to a new constant named `{name}`.
+* 
+**Printing functions and constants**
+
+* `:p` - print all custom functions and constants.
+* `:pd` - print all default, predefined functions and constants (e.g. `sin`, `abs`, `PI`).
